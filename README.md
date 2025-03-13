@@ -33,6 +33,6 @@ I plan to continue updating this repository with new projects and improvements a
 
 Feel free to reach out if you have any questions or suggestions:
 - **GitHub Issues:** [Open an Issue](https://github.com/MatheusDSantossi/learning-journey/issues)
-- **LinkedIn:** [Your LinkedIn Profile](https://www.linkedin.com/in/matheussantossi/)
+- **LinkedIn:** [matheussantossi](https://www.linkedin.com/in/matheussantossi/)
 
 Thank you for checking out my work!
