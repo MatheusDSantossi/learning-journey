@@ -6,7 +6,7 @@ Welcome to my repository containing code and projects developed while following 
 
 This repository is organized into several folders, each corresponding to a project or course module:
 
-- **[Design patterns](./python_tests_and_courses/design_patterns/):** Code and exercises based on a YouTube tutorial, which you can watch [here](https://www.youtube.com/watch?v=aWKEBEg55ps&list=PLKYEe2WisBTGq9T0wPulXz1otUsVeOGey).
+- **[Design patterns](./python_tests_and_courses/design_patterns/):** Numerous Python design patterns are illustrated through comprehensive code examples, accompanied by detailed explanations and analysis to facilitate a deeper understanding of each concept.
 - **[DSA Problems](./python_tests_and_courses/python_data_structures_problems/):** Some code problems solved, in this folder you can find a bunch of problems about DSA and some commom problems.
 
 ## Purpose
