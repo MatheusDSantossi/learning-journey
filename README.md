@@ -6,9 +6,8 @@ Welcome to my repository containing code and projects developed while following 
 
 This repository is organized into several folders, each corresponding to a project or course module:
 
-- **[Data Structure Algorithms](./DSA_course_python_lecture/):** Code and exercises based on a YouTube tutorial, which you can watch [here](https://www.youtube.com/watch?v=aWKEBEg55ps&list=PLKYEe2WisBTGq9T0wPulXz1otUsVeOGey).
-- **[Geeks code problems solved](./geeksg_problems_solved/):** Some code problems solved, in this folder you can find a bunch of problems about DSA and some commom problems from [GeeksforGeeks](https://www.geeksforgeeks.org/).
-- **[W3R problems solved](./w3r_problems_solved/)** Here are a few more exercises about DSA from the [w3resource](https://www.w3resource.com/python-exercises/).
+- **[Design patterns](./python_tests_and_courses/design_patterns/):** Code and exercises based on a YouTube tutorial, which you can watch [here](https://www.youtube.com/watch?v=aWKEBEg55ps&list=PLKYEe2WisBTGq9T0wPulXz1otUsVeOGey).
+- **[DSA Problems](./python_tests_and_courses/python_data_structures_problems/):** Some code problems solved, in this folder you can find a bunch of problems about DSA and some commom problems.
 
 ## Purpose
 
