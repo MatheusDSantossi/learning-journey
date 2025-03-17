@@ -39,7 +39,7 @@ git clone https://github.com/MatheusDSantossi/learning-journey.git
   - GeeksforGeeks (modified solutions)
   - w3resource (extended challenges)
 
-📬 **Let's Connect!**  
+## 📬 **Let's Connect!**  
 [![LinkedIn](https://img.shields.io/badge/LinkedIn-Matheus_Santossi-blue?style=flat&logo=linkedin)](https://linkedin.com/in/matheussantossi) 
 [![GitHub Issues](https://img.shields.io/github/issues/MatheusDSantossi/learning-journey)](https://github.com/MatheusDSantossi/learning-journey/issues)
 
