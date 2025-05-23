@@ -1,11 +1,11 @@
 # Foundations of Data Science and AI
 
-Welcome to the **Foundations of Data Science and AI** repository!  
+Welcome to the **Foundations of Data Science and AI** folder!  
 This collection is organized into chapters, each focusing on a key topic within Data Science and Artificial Intelligence. Each chapter contains curated resources such as PDFs, images, and recommendations to support your learning journey.
 
 ## Structure
 
-The repository is organized as follows:
+This folder is organized as follows:
 
 ```
 foundations_of_Data_Science_and_AI/
@@ -36,4 +36,5 @@ Each `Chapter_X_NAME_OF_THE_SUBJECT` folder contains relevant materials for that
 Feel free to contribute or suggest additional resources!
 
 ## 📬 **Let's Connect!**  
+
 [![LinkedIn](https://img.shields.io/badge/LinkedIn-Matheus_Santossi-blue?style=flat&logo=linkedin)](https://linkedin.com/in/matheussantossi) 
