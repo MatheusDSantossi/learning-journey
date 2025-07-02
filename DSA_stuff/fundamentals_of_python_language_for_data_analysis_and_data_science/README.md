@@ -17,6 +17,8 @@ fundamentals_of_python_language_for_data_analysis_and_data_science/
 ├─ Chapter_4_python_language_variables_types_and_data_structure/
 ├─ Chapter_5_python_language_loops_conditionals_methods_and_functions/
 ├─ Chapter_6_python_language_files_manipulation_modules_packages_and_built_in_functions/
+├─ Chapter_7_project_and_exam_1/
+├─ Chapter_8_introduction_to_object_oriented_programming_basics/
 └─ README.md
 ```
 
