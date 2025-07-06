@@ -86,10 +86,17 @@ class Hangman:
           
           self.choice = random.choice(words)
 
+          # When the word is selected I remove it from my variable, here a good option would be use
+          # Singleton maybe.
           self.words.remove(self.choice)
-          self.word_to_guess = [letter for letter in self.choice]
-          self.field_to_guess = ["_" for letter in self.choice]
           
+          # Creating a list with each letter of the first word
+          self.word_to_guess = [letter for letter in self.choice]
+          
+          # Creating a list of '_' based on the quantity of letters
+          self.field_to_guess = ["_" for letter in self.choice]
+     
+     # Method to select the next word in the game
      def next_word(self):
 
           self.choice = random.choice(self.words)
@@ -103,29 +110,40 @@ class Hangman:
           
 	# Método para adivinhar a letra
      def guess_the_letter(self, letter):
-                    
-          # while not self.check_game_ended:
+
+          # Check if the letter is in the word
           if letter in self.word_to_guess:
-               # print("letter: ", letter)
-               # print("Letter in word")
-               # print("Word to guess: ", self.word_to_guess)
-               self.correct_letters.append(letter)
+               # A loop in case there are more than one of the same letter
+               while True:
                
-               index = self.choice.index(letter)
-               # print("index: ", index)
-               self.word_to_guess.remove(letter)
-               self.field_to_guess.remove('_')
-                              
-               # print("field_to_guess: ", self.field_to_guess)
-               self.field_to_guess.insert(index, letter)
-               # print("field_to_guess: ", self.field_to_guess)
-               
-               print(self.field_to_guess)
-               
+                    # Save the corret letters in a list
+                    self.correct_letters.append(letter)
+                    
+                    # The position index of the letter
+                    index = self.choice.index(letter)
+
+                    # Remove the letter from to word
+                    self.word_to_guess.remove(letter)
+                    
+                    # Remove one of the '_'
+                    self.field_to_guess.remove('_')
+                    
+                    # Add in the field the letter instead of a '_'
+                    self.field_to_guess.insert(index, letter)
+                    
+                    print(self.field_to_guess)
+          
+                    if letter not in self.word_to_guess:
+                         break
+          
           else:
+               # Save the wrong letters in a list
                self.wrong_letters.append(letter)
+               
+               # Call the not_show_letter method and pass the quantity of wrong_letters -1 because the first index in a list is 0
                self.not_show_letter(len(self.wrong_letters) - 1)
 
+          # Check if the game ended
           self.check_game_ended()
      
 	# Método para verificar se o jogo terminou
