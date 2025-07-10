@@ -15,7 +15,7 @@ board = ['''
     |
     |
     |
-=========''', 
+=========\n''', 
 
 '''
 +---+
@@ -24,7 +24,7 @@ O   |
     |
     |
     |
-=========''', 
+=========\n''', 
 
 '''
 +---+
@@ -33,7 +33,7 @@ O   |
 |   |
     |
     |
-=========''',
+=========\n''',
 
 '''
  +---+
@@ -42,7 +42,7 @@ O   |
 /|   |
      |
      |
-=========''', 
+=========\n''', 
 '''
  +---+
  |   |
@@ -50,7 +50,7 @@ O   |
 /|\  |
      |
      |
-=========
+=========\n
 ''', 
 
 '''
@@ -60,7 +60,7 @@ O   |
 /|\  |
 /    |
      |
-=========''', 
+=========\n''', 
 '''
  +---+
  |   |
@@ -68,7 +68,7 @@ O   |
 /|\  |
 / \  |
      |
-=========''']
+=========\n''']
 
 
 # Classe
@@ -81,20 +81,10 @@ class Hangman:
      field_to_guess = []
 
 	# Método Construtor
-     def __init__(self, words):
-          self.words = words
+     def __init__(self):
+          self.words = ["apple", "car"]
           
-          self.choice = random.choice(words)
-
-          # When the word is selected I remove it from my variable, here a good option would be use
-          # Singleton maybe.
-          self.words.remove(self.choice)
-          
-          # Creating a list with each letter of the first word
-          self.word_to_guess = [letter for letter in self.choice]
-          
-          # Creating a list of '_' based on the quantity of letters
-          self.field_to_guess = ["_" for letter in self.choice]
+          self.next_word()
      
      # Method to select the next word in the game
      def next_word(self):
@@ -103,6 +93,7 @@ class Hangman:
 
           self.words.remove(self.choice)
           self.word_to_guess = [letter for letter in self.choice]
+           
           self.field_to_guess = ["_" for letter in self.choice]
           
           self.correct_letters = []
@@ -120,18 +111,20 @@ class Hangman:
                     self.correct_letters.append(letter)
                     
                     # The position index of the letter
-                    index = self.choice.index(letter)
+                    index = self.word_to_guess.index(letter)
+
+                    print("len words: ", len(self.words))
 
                     # Remove the letter from to word
-                    self.word_to_guess.remove(letter)
+                    # self.word_to_guess.remove(letter)
+                    # del self.word_to_guess[index]
+                    self.word_to_guess[index] = 1
                     
                     # Remove one of the '_'
                     self.field_to_guess.remove('_')
                     
                     # Add in the field the letter instead of a '_'
                     self.field_to_guess.insert(index, letter)
-                    
-                    print(self.field_to_guess)
           
                     if letter not in self.word_to_guess:
                          break
@@ -149,11 +142,10 @@ class Hangman:
 	# Método para verificar se o jogo terminou
      def check_game_ended(self):
           
-          if len(self.words) == 0 and len(self.word_to_guess) == 0:
-               print("Congratulations you guessed correctly all the words!!!")
+          if len(self.words) == 0 and len(set(self.word_to_guess)) == 1:
                return True
           
-          elif len(self.word_to_guess) == 0:
+          elif len(set(self.word_to_guess)) == 1:
                self.player_won()
                return False
           
@@ -162,15 +154,13 @@ class Hangman:
      def player_won(self):
           
           self.next_word()
-          print("Congratulations you guessed correctly the first word!!\n")
+          print("\nCongratulations you guessed correctly the first word!!")
           print("Let's go to the next one!!!\n")
-          print(self.field_to_guess)
                
 	# Método para não mostrar a letra no board
      def not_show_letter(self, index):
           
           print(board[index])
-          print(self.field_to_guess)
      
      # Method to show the letter on the board
      
@@ -182,12 +172,13 @@ class Hangman:
           return False
      
      def menu(self):
-          print("Try to guess the letter!")
+          print(self.field_to_guess)
+          print("\nTry to guess the letter!")
           print("Type the letter: ")
 
-if __name__ == "__main__":
-     hangman_game = Hangman(["apple", "car"])
-     
+def main():
+     hangman_game = Hangman()
+
      while not hangman_game.check_game_ended():
           
           hangman_game.menu()
@@ -195,4 +186,10 @@ if __name__ == "__main__":
           letter = input("")
           
           hangman_game.guess_the_letter(letter)
+     
+     
+     print("\nCongratulations you guessed correctly all the words!!!")
+     
+if __name__ == "__main__":
+     main()
      
