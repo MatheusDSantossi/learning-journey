@@ -23,6 +23,7 @@ fundamentals_of_python_language_for_data_analysis_and_data_science/
 ├─ Chapter_10_python_language_data_manipulation_with_pandas/
 ├─ Chapter_11_python_data_visualization_with_matplotlib_and_seaborn/
 ├─ Chapter_12_python_data_analysis_with_python_and_sql_language/
+├─ Chapter_13_project_and_exam_2/
 └─ README.md
 ```
 
