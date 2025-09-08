@@ -65,7 +65,7 @@ print(total_sales_by_city)
 # plt.title("The 10 biggest Sales Cities")
 # plt.show()
 
-print("What's the 10 cities with the biggest total of sales?")
+print("Which segment had the biggest Total of Sale?")
 print("OBS: Show the result using a pie chart!")
 print("------------------------")
 
@@ -78,7 +78,26 @@ biggest_total_sales_segment = df.groupby("Segmento")["Valor_Venda"].sum().sort_v
 
 biggest_total_sales_segment.plot(kind="pie", figsize=(10, 6))
 # plt.pie(biggest_total_sales_segment, autopct=absolute_value)
-plt.xlabel("Segments")
-plt.legend(biggest_total_sales_segment.index.astype(str))
-plt.va
+# plt.xlabel("Segments")
+# plt.legend(biggest_total_sales_segment.index.astype(str))
+# plt.va
+# plt.show()
+
+print("(Baby level) What the Total of Sales by segment and Year?")
+print("------------------------")
+
+print(df)
+total_sale_by_segment = df.groupby("Segmento")["Valor_Venda"].sum()
+total_sale_by_year = df.groupby("Segmento")["Valor_Venda"].sum()
+
+df["Data_Pedido"] = pd.to_datetime(df["Data_Pedido"], format="mixed")
+df.set_index('Data_Pedido', inplace=True)
+
+# Year
+sales_by_order_date = df["Valor_Venda"].resample("Y").max()
+
+fig, ax = plt.subplots()
+total_sale_by_segment.plot(ax=ax)
+sales_by_order_date.plot(ax=ax)
+
 plt.show()
