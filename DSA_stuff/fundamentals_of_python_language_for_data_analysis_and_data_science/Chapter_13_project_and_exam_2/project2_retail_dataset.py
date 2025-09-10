@@ -340,4 +340,80 @@ print("------------------------")
 
 print(df)
 
+discount_percentage = 15
+
+df["After_Sale_Value"] = df["Valor_Venda"].apply(lambda x: x - (x * (discount_percentage / 100)))
+
 print("-" * 10 + "... df already with the discount")
+
+print(df)
+
+print("(Ninja Master Challenge) What's the average of sales by segmento, by year and by month?")
+print("Show the result using a line chart")
+print("-" * 20)
+
+def analyze_sales_by_segment_year_and_month(df: pd.DataFrame):
+    # Preparing the data
+    df_copy = df.copy()
+    
+    print("df: ", df)
+    
+    df_copy["Data_Pedido"] = pd.to_datetime(df_copy["Data_Pedido"], dayfirst=True, errors="coerce")
+    
+    df_copy.dropna(subset=["Data_Pedido"])
+    
+    df_copy["Year"] = df_copy["Data_Pedido"].dt.year
+    df_copy["Month"] = df_copy["Data_Pedido"].dt.month
+    df_copy["period"] = pd.to_datetime(dict(year=df_copy["Year"], month=df_copy["Month"], day=1))
+    
+    # Group by Segment and period (datetime) and compute the mean
+    grouped = (
+        df_copy.groupby(["Segmento", "period"], as_index=False)["Valor_Venda"].mean().rename(columns={"Valor_Venda": "avg_sales"})
+    )
+    
+    # pivot so index=period (time), columns=Segmento, values=avg_sales
+    pivot = grouped.pivot_table(index="period", columns="Segmento", values="avg_sales", aggfunc="first")
+    
+    # Ensuring full monthly index from min to max so chart is continuos 
+    if not pivot.empty:
+        full_idx = pd.date_range(pivot.index.min(), pivot.index.max(), freq="MS")
+        pivot = pivot.reindex(full_idx) # Leaves NaN where a segment has no data that month
+    
+    return pivot
+    
+
+def create_average_line_chart(pivot: pd.DataFrame):
+    
+    if pivot.empty:
+        print("No data to plot")
+        return
+    
+    fig, ax = plt.subplots(figsize=(12, 8))
+
+    
+    # Plot the line for segment
+    for col in pivot.columns:
+        
+        ax.plot(pivot.index, pivot[col], marker="o", linewidth=2, label=col)
+        
+    # Format x axis as Year-Month 
+    ax.xaxis.set_major_locator(mdates.AutoDateLocator())
+    ax.xaxis.set_major_formatter(mdates.DateFormatter("%Y-%m"))
+    fig.autofmt_xdate(rotation=45)
+    
+    ax.set_xlabel("Period (Year-Month)", fontsize=12, fontweight="bold")
+    ax.set_ylabel("Average Sales", fontsize=12, fontweight="bold")
+    ax.set_title("Average Sales by Segment (monthly)", fontsize=14)
+    ax.grid(alpha=0.3)
+    ax.legend(title="Segment")
+    
+    # Formatting y ticks (thousands)
+    ax.yaxis.set_major_formatter(plt.FuncFormatter(lambda x, _: f"${x/100:.0f}K"))
+    
+    plt.tight_layout()
+    plt.show()
+    
+average_sales_by_segment_year_month = analyze_sales_by_segment_year_and_month(df)
+
+print("\n Creating Line Chart...")
+create_average_line_chart(average_sales_by_segment_year_month)
