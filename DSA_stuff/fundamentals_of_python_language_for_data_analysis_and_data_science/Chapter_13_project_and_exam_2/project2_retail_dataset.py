@@ -305,4 +305,39 @@ def your_code_fixed(df):
     plt.show()
 
 # Running the complete analysis
-complete_sales_analysis(df)
+# complete_sales_analysis(df)
+
+print("(Junior Level) The company managers are considering give differents discounts range and they would like to do a simulation based on the rule below:")
+print("If Valor_Venda is bigger than 1000 the discount will be 15%")
+print("If Valor_Venda is lower than 1000 the discount will be 10%")
+print("How many sales would receive 15% discount")
+print("------------------------")
+
+# Creates a copy of the dataframe
+df_copy = df.copy()
+
+# Checks if the sale value is bigger than 1000
+print(df[df["Valor_Venda"] > 1000])
+
+# Checks if the sale value is lower than 1000
+print(df_copy[df_copy["Valor_Venda"] < 1000])
+
+# Add the new discount column based on the data frames
+df["Discount"] = 15
+df_copy["Discount"] = 10
+
+print(f"At total {len(df)} sales received a 15% discount!")
+
+# Merge the data frame for future analyses
+# df.merge(df_copy)
+
+
+# print(df)
+# print(df_copy)
+
+print("(Master Level) Consider that the company decide to give a 15% discount from the previous question. What would be the average sale value before and after the discount")
+print("------------------------")
+
+print(df)
+
+print("-" * 10 + "... df already with the discount")
