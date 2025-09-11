@@ -1,4 +1,6 @@
 import pandas as pd
+import matplotlib
+matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 import matplotlib.dates as mdates
 import numpy as np
@@ -386,9 +388,52 @@ print("(Galaxy Ninja Master Challenge) What's the total of sales by category, an
 print("Show everything in a single chart")
 print("-" * 20)
 
-total_sales_by_subcategory_n12 = df.groupby("SubCategoria")["Valor_Venda"].sum().nlargest(12)
+# Identify the top 12 subcategories based on total sales
+top12_subcategories = (df.groupby("SubCategoria")["Valor_Venda"].sum().nlargest(12).index.tolist())
 # total_sales_by_subcategory_n12 = df.groupby("SubCategoria")["Valor_Venda"].sum().sort_values(ascending=False).head(12)
 total_sales_by_category = df.groupby("Categoria")["Valor_Venda"].sum().sort_values(ascending=False)
 
-print(total_sales_by_subcategory_n12)
-print(total_sales_by_category)
+
+# Filter the original DataFrame to include only the top 12 subcategories
+df_top12 = df[df["SubCategoria"].isin(top12_subcategories)]
+
+# Create a pivot table. Which is crucial for stacked bar chart, as it will organizes the data with 'Categoria' as rows, 'Subcategoria' as columns, and  'Valor_Venda' as the values
+pivot_df = df_top12.pivot_table(
+    index="Categoria",
+    columns="SubCategoria",
+    values="Valor_Venda",
+    aggfunc="sum",
+    fill_value=0,
+)
+
+# Sort the subcategories within the pivot table to ensure consistent stacking order across categories (from hiest to lowest sales)
+sorted_subcategories = (
+    df_top12.groupby("SubCategoria")["Valor_Venda"].sum().sort_values(ascending=False).index
+)
+
+pivot_df = pivot_df[sorted_subcategories]
+
+print(pivot_df)
+
+# Plot the stacked bar chart
+fig, ax = plt.subplots(figsize=(12, 8))
+pivot_df.plot(kind="bar", stacked=True, ax=ax)
+
+print("fig: ", fig)
+
+# Customizing the chart for better readability
+ax.set_title("Total Sales by Category and Top 12 Subcategories", fontsize=16, pad=20)
+
+ax.set_xlabel("Category", fontsize=12)
+ax.set_ylabel("Total Sales", fontsize=12)
+ax.tick_params(axis="x", rotation=45)
+
+# Move the legend outside the plot for cleaner look
+ax.legend(title="Subcategory", bbox_to_anchor=(1.05, 1), loc="upper left")
+
+plt.tight_layout()
+# plt.show()
+
+plt.savefig("stacked_bar_chart.png")
+
+# print(total_sales_by_category)
