@@ -1,91 +1,37 @@
-# job-challenges-code
+# Course Projects and Code
 
-A collection of coding challenges and small learning projects created to practice problem-solving and explore different technologies.  
-This repository is organized into three main sections:
+Welcome to my repository containing code and projects developed while following various YouTube tutorials and courses. This collection reflects my journey as I build my skills and understanding of software development.
 
-- **js_files_challenge** – JavaScript utilities for creating and listing files.
-- **leetcode_solutions** – My personal attempts and solutions for various LeetCode challenges.
-- **python_fastapi_challenge** – A simple FastAPI example demonstrating basic API structure.
+## Repository Contents
 
----
+This repository is organized into several folders, each corresponding to a project or course module:
 
-## 📁 Project Structure
+- **[Design patterns](./python_tests_and_courses/design_patterns/):** Numerous Python design patterns are illustrated through comprehensive code examples, accompanied by detailed explanations and analysis to facilitate a deeper understanding of each concept.
+- **[DSA Problems](./python_tests_and_courses/python_data_structures_problems/):** Some code problems solved, in this folder you can find a bunch of problems about DSA and some commom problems.
 
-```
+## Purpose
 
-job-challenges-code/
-│
-├── js_files_challenge/
-│   └── JavaScript challenge implementing file creation and listing
-│
-├── leetcode_solutions/
-│   └── Practice code for various LeetCode problems (not full working apps)
-│
-├── python_fastapi_challenge/
-│   └── Minimal FastAPI example with basic endpoints
-│
-└── README.md
+The projects in this repository are intended to:
+- Demonstrate my learning progress and passion for coding.
+- Showcase the application of various programming concepts.
+- Provide a portfolio of examples that reflect my problem-solving and technical skills.
 
-```
+## How to Use
 
----
+Each project folder includes its own README with instructions on how to set up and run the code. While the course folders are filled with a bunch of different codes, and in most of the files contains some explanation. If you have any questions or need further clarification, feel free to open an issue or reach out to me.
 
-## 🚀 Project Overviews
+## Disclaimer
 
-### **1. js_files_challenge**
-A small JavaScript challenge focused on learning how to:
+Some of the code in these projects is based on tutorials from YouTube. They are for educational purposes only. I have made my own improvements and modifications to better understand the concepts and to tailor the projects to my learning style. The courses code I tried to create my own solution before checking the solved answer.
 
-- Create files programmatically
-- List existing files
-- Work with Node.js file system utilities
+## Future Plans
 
-Useful for strengthening JS fundamentals and Node.js environment handling.
+I plan to continue updating this repository with new projects and improvements as I expand my knowledge in software development. Stay tuned for more updates!
 
----
+## Contact
 
-### **2. leetcode_solutions**
-Contains my solutions to various LeetCode challenges.  
-Notes:
+Feel free to reach out if you have any questions or suggestions:
+- **GitHub Issues:** [Open an Issue](https://github.com/MatheusDSantossi/learning-journey/issues)
+- **LinkedIn:** [matheussantossi](https://www.linkedin.com/in/matheussantossi/)
 
-- These are **practice implementations**, not full applications.
-- Code is organized by problem.
-- Useful as a coding-interview study reference.
-
----
-
-### **3. python_fastapi_challenge**
-A simple introduction to **FastAPI**, including:
-
-- Basic route creation
-- JSON responses
-- Local development setup
-
-This folder serves as a quick reference for building simple APIs with FastAPI.
-
----
-
-## 🔧 Technologies Used
-
-- **JavaScript / Node.js**
-- **Python**
-- **FastAPI**
-
----
-
-## 📌 Purpose of This Repository
-
-This repository serves as:
-
-- A practice space for solving coding challenges  
-- A showcase of learning progress in different languages  
-- A reference for revisiting fundamental concepts  
-
----
-
-## 📬 Contact
-
-If you’d like to share feedback or suggestions, feel free to open an issue or reach out!
-
----
-
-Happy coding! 🚀
+Thank you for checking out my work!
