@@ -8,6 +8,9 @@ This repository is organized into several folders, each corresponding to a proje
 
 - **[Design patterns](./python_tests_and_courses/design_patterns/):** Numerous Python design patterns are illustrated through comprehensive code examples, accompanied by detailed explanations and analysis to facilitate a deeper understanding of each concept.
 - **[DSA Problems](./python_tests_and_courses/python_data_structures_problems/):** Some code problems solved, in this folder you can find a bunch of problems about DSA and some commom problems.
+- **[DSA Stuff](./DSA_stuff/):** Code problems solved, in this folder you can find a bunch of problems about DSA and some commom problems of Data Science and Python.
+- **[Job Challenges Code](./job-challenges-code/):** Some code problems solved, in this folder you can find several codes solved following questions in [Leet Code](https://leetcode.com/).
+- **[Multi Module](./multi-module/):** Simple Spring Boot project with multi modules.
 
 ## Purpose
 
