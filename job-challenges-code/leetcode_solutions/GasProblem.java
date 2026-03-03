@@ -4,13 +4,16 @@ class MySolution {
         int gasSum = Arrays.stream(gas).sum();
         int costSum = Arrays.stream(cost).sum();
 
-        int start = 0;
+        int start = -1;
         int tank = 0;
 
         for (int i = 0; i < cost.length; i++) {
             for (int j = 0; j < gas.length; j++) {
-                if (gas[j] >= cost[i] && start != 0) {
-                    start = j;
+                if (gas[j] >= cost[i]) {
+                    if (j != 0 || j != gas.length) {
+                        start = j;
+
+                    }
                 } 
             }
         }
