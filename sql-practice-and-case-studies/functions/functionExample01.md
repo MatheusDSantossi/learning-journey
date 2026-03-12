@@ -28,7 +28,7 @@ SELECT COALESCE(TABLE_VALUE::numeric, 0.0) INTO parameter_value FROM TABLE WHERE
 
 RETURN parameter_value; -> returns the value
 
-# Concepts involved / why it's written thta way
+## Concepts involved / why it's written thta way
 
 - **Parameter-table pattern**: This is a standard approach to store configuration/value pairs in a table keyed by a name (param).
 - **Soft-delete flag**: D_E_L_E_T_E indicates whether a row is "deleted" without physically removing it.
@@ -37,7 +37,7 @@ RETURN parameter_value; -> returns the value
 - **PL/pgSQL vs SQL function**: Author chose PL/pgSQL (procedural), probably for familiarity or future expansion, but the function is a single SELECT so SQL-language function could be simpler and faster.
 **- Volatility/Parallel attributes**: They affect planner behavior, likely miss-declared here (see below)
 
-# Problems, concers & code quality assessment
+## Problems, concers & code quality assessment
 
 1. **VOLATILE PARALLEL UNSAFE is probably wrong**:
     - The function only reads from a table; it's deterministic for the same DB state. It should be *STABLE* (safe: returns same result within a single statement) or at least not need *VOLATILE*. Making *VOLATILE* disables optimizer opportunities and can prevent using parallel query exectuion.
@@ -60,21 +60,21 @@ RETURN parameter_value; -> returns the value
     - A simple SELECT-only function performs better and is simpler if defined as LANGUAGE SQL. PL/pgSQL adds overhead.
 10. **No input validation**:
     - *parameter* could be NULL, function will compare TABLE_PARAM = NULL which returns no rows. Possibly return 0. Consider early *IF parameter IS NULL THEN RETURN 0; END IF*.
-    
-# Security risks
+  
+## Security risks
 
 - **SQL injection**: Not an issue as written, no dynamic SQL is used. Using variable in the WHERE clause in PL/pgSQL is safe.
 - *Privilege escalations*: If we change to *SECURITY DEFINER*, we need to be **careful**: this can expose table data to unprivileged users.
 - **Error information leakage**: If *TABLE_VALUE* may contain non-numeric strings, a cast error could buble up. Consider handling exceptions and returning a safe default.
 
-# Performance & scalability
+## Performance & scalability
 
 - Single-row index lookup (on *TABLE_PARAM*) is cheap; ensure index exists.
 - For many concurrent reads if config parameters, a DB function call each time is OK but repeated calls from many request may be slower than caching at app layer or using *pg_prewarn/in-memory* caches (Redis, in-process).
 - The numeric type is slower than interger/double precision for heavy math; choose type according to domain needs.
 - **VOLATILE / PARALLEL UNSAFE** prevents parallel query optimization, switch to *STABLE / PARALLEL SAFE* where correct.
 
-# Suggested improvements (concrete)
+## Suggested improvements (concrete)
 
 ## A. Minimal, safer PL/pgSQL refactor
 
@@ -107,7 +107,7 @@ END;
 $$;
 ```
 
-### Changes made:
+### Changes made
 
 - *STABLE* and *PARALLEL SAFE*, allow planner optimizations and parallel workers.
 - *COALESCE(D_E_L_E_T_E, FALSE)*, treats NULL as not deleted.
@@ -155,20 +155,20 @@ WHERE COALESCE(D_E_L_E_T_E, false) = false;
 - Ensure *D_E_L_E_T_E* is BOOLEAN (not text), default FALSE, NOT NULL if possible.
 - If TABLE_VALUE is numeric-like data (money/numbers), store as *numeric* (or *numeric(scale, precision)* or *double precision* depending on needs) rather than text. Eliminates casting and errors.
 
-# Extra best-practices & architecture suggestions
+## Extra best-practices & architecture suggestions
 
 - If this table stores application configuration parameters that are read frequently and rarely changed, consider caching them at app level (e.g., per-process in-memory cache or Redis) and invalidate on cahnges.
-- Use a small, well-typed schema for parameters: key (text, PK), **value_numeric** (numeric), value_text, updated_at; typed columns reduce casting problems. 
+- Use a small, well-typed schema for parameters: key (text, PK), **value_numeric** (numeric), value_text, updated_at; typed columns reduce casting problems.
 - For multi-tenant systems, keys might need a tenant_id in the WHERE clause; design indexes accordingly.
 - Add monitoring/metrics if reads are heavy (count calls, response time).
 - Add unit tests for function behaviour, valid numeric, null, multiple rows, non-numeric stored value.
 
-# When to choose numeric vs double precision
+## When to choose numeric vs double precision
 
 - **numeric** for exact decimals (money, financial data).
 - **double precision** (floating point) for scientific/calculation where approximate floats are OK and performance matters.
 
-# Suggested follow-up topics to study
+## Suggested follow-up topics to study
 
 - PostgreSQL function volatility: **IMMUTABLE**, **STABLE**, **VOLATILE** and **PARALLEL** safety.
 - PL/pgSQL vs SQL-language functions: pros/cons and performance differences.
@@ -180,14 +180,14 @@ WHERE COALESCE(D_E_L_E_T_E, false) = false;
 - Security: SECURITY INVOKER vs SECURITY DEFINER and least-privilege patterns.
 - Testing database functions (pgTAP or integration tests).
 
-# Real-world scenarios where this pattern is used
+## Real-world scenarios where this pattern is used
 
 - Application configuration retrieval (max_discount, tax_rate).
 - Feature flags stored in DB read by many services.
 - Tenant-specific parameters in multi-tenant apps.
 - Financial settings like interest rates or thresholds.
 
-# Small reflection questions (for us)
+## Small reflection questions (for us)
 
 1. Is TABLE_PARAM supposed to be unique? If yes, can we enforce it at schema level?
 
