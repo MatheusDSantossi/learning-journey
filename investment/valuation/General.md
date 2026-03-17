@@ -75,8 +75,6 @@ A lógica é comparar o preço da empresa com o de seus concorrentes ("pares") o
 
 Os Principais Múltiplos:
 
-
-
 | MÚLTIPLO                       | FÓRMULA                                      | O QUE MEDE                                              | MELHOR USO                                                                           |
 | ------------------------------ | -------------------------------------------- | ------------------------------------------------------- | ------------------------------------------------------------------------------------ |
 | P/L (Preço/Lucro)              | Preço da Ação / Lucro por Ação               | Quantos anos de lucro “compram” a ação.                 | Mais famoso, mas ignora a dívida.                                                    |
