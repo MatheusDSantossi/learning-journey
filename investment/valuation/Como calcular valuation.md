@@ -44,7 +44,56 @@ Por essa razão a metodologia de Valuation de Liquidação é mais utilizada em 
 
 ## Como fazer Valuation?
 
-P
+Para fazer o Valuation de uma empresa é preciso, em primeiro lugar, escolher uma abordagem a seguir. Uma das mais utilizadas por profissionais do mercado é a de Fluxo de caixa Descontado (FCD).
+
+Para fazer o Valuation de uma empresa utilizando o método de Fluxo de Caixa descontado, você vai utilizar os seguintes passos:
+
+1. Projeção de Fluxo de Caixa
+2. Definir a Taxa de Desconto
+3. Somar todos os fluxos descontados
+
+## Projeção de Fluxo de Caixa
+
+O primeiro passo consiste em **projetar o fluxo de caixa da empresa** para os próximos anos, geralmente em um período de 5 a 10 anos. Para isso, é necessário analisar **os resultados financeiros históricos, as perspectivas de crescimento e as condições do mercado**.
+
+Entretanto, é importante considerar diferentes cenários e variáveis que possam afetar o fluxo de caixa, como mudanças na economia, na indústria ou na regulamentação.
+
+Ao determinar o período a ser analisado, também pode ser necessário avaliar o contexto em que a empresa está inserida.
+
+Sabe-se que quanto maior o período, menos precisos são os resultados. Mas existem setores que tendem a ter resultados mais consistentes ao longo do tempo, como o setor de energia, enquanto outros, como Startups e outras empresas menores podem exigir um período menor de análise para maior precisão nos resultados.
+
+## Definir a Taxa de Desconto
+
+A **taxa de desconto** é usada para trazer o valor futuro do fluxo de caixa para o presente, levando em conta o risco de investimento. Ela deve levar em consideração o custo de oportunidade, o risco da empresa e a taxa de retorno esperada pelo investidor.
+
+Não existe um consenso entre os analistas de como essa taxa deve ser calculada. Ela tem o objetivo de representar o risco da empresa ao longo do tempo e deve ser maior que a [taxa básica de juros (Taxa Selic)](https://conteudos.xpi.com.br/aprenda-a-investir/relatorios/taxa-selic/).
+
+Alguns analistas sugerem a utilização do rendimento médio de empresas na B3, enquanto outros preferem que ela seja baseada na média de rendimentos da r[renda fixa](https://conteudos.xpi.com.br/aprenda-a-investir/relatorios/o-que-e-renda-fixa/). Existem também a possibilidade de se considerar o custo de capital da empresa e os riscos médios do setor para fazer este cálculo.
+
+Por fim, uma solução que gera maior consenso entre analistas pode ser a de considerar rendimentos médios da Bolsa para calcular a taxa de desconto.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
