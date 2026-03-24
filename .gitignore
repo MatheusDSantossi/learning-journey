@@ -11,3 +11,5 @@ teste_dict.py
 
 # Jupyter
 .ipynb_checkpoints/
+
+node_modules

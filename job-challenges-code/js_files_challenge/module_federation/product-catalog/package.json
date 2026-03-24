@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "main": "index.js",
   "private": "true",
+  "start": "cross-env NODE_ENV=development rspack serve",
   "workspaces": [
     "host",
     "remote"
@@ -13,5 +14,10 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "description": ""
+  "description": "",
+  "devDependencies": {
+    "@rspack/plugin-react-refresh": "^1.6.1",
+    "@swc/core": "^1.15.18",
+    "@swc/helpers": "^0.5.19"
+  }
 }
