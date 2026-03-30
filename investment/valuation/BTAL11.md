@@ -690,3 +690,315 @@ RETORNO ESPERADO PONDERADO:
 ## PARTE 7: SIMULAÇÃO PARA SUA POSIÇÃO PESSOAL
 
 ### 7.1 Cenário Atual (Seu Portfólio)
+
+```tex
+POSIÇÃO ATUAL:
+- Cotas: 4
+- Preço de Entrada: R$ 86,39 (inferido)
+- Preço Atual: R$ 90,00
+- Valor Total: R$ 360,00
+- Ganho Não-Realizado: R$ 14,44 (~+6%)
+ 
+Este é um GANHO RAZÓAVEL e deve ser considerado
+para gestão do risco!
+```
+
+### 7.2 Cenários de Futuro (2028)
+
+#### Cenário 1: Base (Probabilidade 50%)
+
+```TEX
+Preço 2028 (Projetado): R$ 104,00
+Dividendos 2026-2027-2028: R$ 8,77 + 9,04 + 9,34 = R$ 27,15
+Ganho de Capital: (R$ 104 - R$ 89,65) × 4 = R$ 57,40
+Ganho de Dividendos: R$ 27,15 × 4 = R$ 108,60
+Ganho Total (2026-2028): R$ 166,00
+Rentabilidade: +46,3% em 3 anos (+13,5% a.a.)
+```
+
+#### Cenário 2: Pessimista (Probabilidade 30%)
+
+```tex
+Preço 2028: R$ 82,00
+Dividendos 2026-2028: R$ 23,50 (reduzido por apertamento)
+Ganho de Capital: (R$ 82 - R$ 89,65) × 4 = -R$ 30,60
+Ganho de Dividendos: R$ 23,50 × 4 = R$ 94,00
+Ganho Total: R$ 63,40
+Rentabilidade: +17,7% em 3 anos (+5,6% a.a.)
+```
+
+#### Cenário 3: Otimista (Probabilidade 20%)
+
+```tex
+Preço 2028: R$ 115,00
+Dividendos 2026-2028: R$ 29,00
+Ganho de Capital: (R$ 115 - R$ 89,65) × 4 = R$ 101,40
+Ganho de Dividendos: R$ 29 × 4 = R$ 116,00
+Ganho Total: R$ 217,40
+Rentabilidade: +60,7% em 3 anos (+16,9% a.a.)
+```
+
+### 7.3 Estratégia de Gestão de Posição
+
+#### Opção 1: MANTER 100% (Mais Conservador)
+
+**Pró:**
+
+- Aproveita todos os dividendos
+- Pode beneficiar de recuperação do agro (2027-2028)
+- Mantém exposição para potencial upside
+
+**Contra:**
+
+- Concentrado em tema cíclico
+- Risco de perder ganhos em cenário pessimista
+
+**Recomendação de Monitoramento:**
+
+```tex
+Vender se:
+- Preço subir acima de R$ 105 (ganho de +17%)
+- Sinais de crise agrícola se concretizarem
+- Rendimento cair abaixo de 5% ao ano
+ 
+Comprar mais se:
+- Preço cair abaixo de R$ 75 (oportunidade)
+- Agro mostrar sinais de recuperação real
+```
+
+---
+
+#### Opção 2: VENDER PARCIAL - 2 Cotas (RECOMENDADO)
+
+**Situação:**
+
+```tex
+MANTER: 2 cotas
+VENDER: 2 cotas a R$ 90,00
+ 
+Caixa Liberado: R$ 180,00
+Ganho Realizado: R$ 28,88
+Ganho Retido: ~R$ 28,88 (2 cotas)
+ 
+NOVA ALOCAÇÃO:
+- 2 cotas BTAL11: Receita continuada (R$ 17,54/ano)
+- R$ 179,30: Realocável para CDB/Tesouro/Outro FII
+```
+
+*Pros:**
+
+- ✅ Realiza parcialmente ganho
+- ✅ Reduz risco de reversão (perdendo tudo)
+- ✅ Libera capital para outros investimentos
+- ✅ Mantém exposição ao tema (2 cotas)
+- ✅ Garante renda futura (R$ 17-18/ano)
+
+**Contras:**
+
+- ❌ Se agro recuperar fortemente, perde upside
+- ❌ Imposto de renda sobre ganho realizado
+
+**Imposto sobre Ganho:**
+
+```tex
+Ganho por Cota: (90,00 - 12,61) × 2 = R$ 154,78
+Imposto (20%): R$ 30,95
+Caixa Líquido: R$ 180,00 - R$ 30,95 = R$ 149,05
+```
+
+## PARTE 8: RECOMENDAÇÃO FINAL
+
+### 8.1 Síntese da Tese
+
+**O QUE FAVORECE MANTER/COMPRAR MAIS:**
+
+✅ Dividendo elevado (11,5% histórico, 8-9% prospectivo)
+✅ P/VP com desconto (0,77x vs. 0,85-0,90x justo)
+✅ Ativo essencial para cadeia agrícola (silos não desaparecem)
+✅ Recuperação estrutural esperada para 2027-2028
+✅ Potencial de valorização de cota
+
+**O QUE FAVORECE VENDER/REDUZIR:**
+
+❌ Ciclo agrícola em transição de preços altos para normais
+❌ Produtores com margens apertadas (risco de inadimplência)
+❌ Ganho já realizado de +14% (tomar ganhos)
+❌ Juros altos (Selic 15%) reduzem atratividade relativa
+❌ Risco de redução de dividendos em 2026-2027
+
+---
+
+### 8.2 Recomendação para Sua Situação
+
+**STATUS: 🟡 MANTER COM VENDA PARCIAL (Opção 2)**
+
+```tex
+AÇÃO RECOMENDADA:
+ 
+1. VENDER 2 cotas a preço de mercado (R$ 90,00)
+   └─ Realiza parcialmente ganho extraordinário
+   └─ Libera ~R$ 145-150 em capital
+ 
+2. MANTER 2 cotas
+   └─ Continua recebendo dividendos (~R$ 17-18/ano)
+   └─ Mantém exposição ao tema
+   └─ Menos risco
+ 
+3. REALOCAÇÃO DO CAIXA LIBERADO:
+   └─ 40% em Tesouro IPCA+ 2035 (segurança)
+   └─ 30% em CDB/LCI (liquidez)
+   └─ 20% em outro FII logística de qualidade (BTRA11 ou similar)
+   └─ 10% em caixa (oportunidades)
+```
+
+---
+
+### 8.3 Timeline de Monitoramento
+
+#### Q2 2026 (Abril-Junho)
+
+```tex
+SINAIS A MONITORAR:
+- Resultado Q1 2026 do BTAL11 (dividendo)
+- Preços de soja e milho (commodities)
+- Ocupação de silos do fundo
+- Relatos de produtores (dificuldades?)
+ 
+AÇÃO SE:
+├─ Tudo normal: Manter posição de 2 cotas
+├─ Preço sobe acima R$ 105: Considerar vender 1 cota adicional
+└─ Preço cai abaixo R$ 80: Considerar comprar 2 cotas (oportunidade)
+```
+
+#### Q4 2026 (Outubro-Dezembro)
+
+```tex
+ANÁLISE PROFUNDA:
+- Quanto foi a colheita real da safra 2025/26?
+- Produtores estão conseguindo pagar aluguel?
+- Resultados financeiros do FII (semestral)
+- Projeção de dividendos para 2027
+ 
+DECISÃO:
+└─ Se margem produtores OK: Manter ou até comprar
+└─ Se sinais negativos: Vender posição restante
+```
+
+#### Q2 2027 (Abril-Junho)
+
+```tex
+CHECKPOINT:
+- 18 meses depois, avaliar se tese se confirmou
+- Margens de produtores normalizaram?
+- Dividendos sustentáveis?
+ 
+AÇÃO:
+└─ Se tudo ok: Recompor para 4 cotas
+└─ Se problemas: Manter 2 cotas e aproveitar dividendos
+```
+
+---
+
+## PARTE 9: FAQ - DÚVIDAS FREQUENTES
+
+### P: "Você acha que o agro vai ficar ruim mesmo?"
+
+**R:** Para 2026, a estimativa é de que os produtores de grãos continuem em uma situação de aperto das margens, chegando à equalização dos problemas financeiros ao final da safra 2026/27. Então sim, haverá dificuldades em 2026-2027, mas recuperação esperada em 2027-2028.
+
+---
+
+### P: "Devo vender tudo ou esperar?"
+
+**R:** Depende do seu perfil:
+
+- **Conservador:** Venda 50% (Opção 2 recomendada)
+- **Moderado:** Venda 25% (Opção 1 modificada)
+- **Agressivo:** Manter 100% e comprar mais se cair
+
+---
+
+### P: "Qual o downside máximo?"
+
+**R:** Em cenário muito pessimista (crise agrícola severa):
+
+- Preço pode cair para R$ 60-70
+- Dividendos podem ser reduzidos 50%
+- Perda total: até -25% em 3 anos
+
+Mas isto é cenário 10-15% de probabilidade.
+
+---
+
+### P: "Vale a pena comparar com Tesouro IPCA+?"
+
+**R:** **Não direto**, pois têm risco diferente:
+
+- Tesouro: 5-6% a.a., risco muito baixo
+- BTAL11: 9-10% a.a., risco médio
+
+Se você tolera risco médio e quer renda, BTAL11 é melhor. Caso contrário, Tesouro é mais adequado.
+
+---
+
+### P: "O dividendo é sustentável?"
+
+**R:** **Moderadamente sim**, com ressalvas:
+
+- 2026: Provavelmente sustentável (R$ 8-9/cota)
+- 2027: Pode sofrer compressão (R$ 7-8/cota) se agro piorar
+- 2028+: Normalização esperada
+
+Portanto, não é garantido, mas bem apoiado por fundamentos.
+
+---
+
+### P: "Devo reaplicar os dividendos?"
+
+**R:** **Sim, recomendo:**
+
+- Enquanto preço < R$ 100: reaplicar dividendos
+- Acumula mais cotas a preço bom
+- Aproveita o efeito "bola de neve" de reinvestimento
+
+---
+
+## PARTE 10: CONCLUSÃO
+
+### Resumo Executivo Final
+
+**BTAL11 é um FII de qualidade, que oferece:**
+
+✅ **Alto rendimento:** 8-11% a.a. (acima da média)
+✅ **Ativo essencial:** Silos/armazéns não perdem valor
+✅ **Potencial de valorização:** Especialmente em 2027-2028
+✅ **Liquidez aceitável:** Fácil vender quando necessário
+
+**PORÉM, com ressalvas importantes:**
+
+❌ **Ciclo cíclico:** Dependente de ciclo agrícola
+❌ **Risco de compressão:** Dividendos podem cair em 2026-2027
+❌ **Ganhos já realizados:** +610% é extraordinário (tomar ganhos)
+❌ **Juros altos:** Reduzem atratividade relativa
+
+### Recomendação Sintetizada
+
+Para sua situação específica (4 cotas, +14,44% de ganho):
+
+**🟡 VENDER 2 COTAS, MANTER 2 COTAS**
+
+- Realiza parcialmente ganho extraordinário
+- Reduz risco de reversão
+- Mantém exposição ao tema
+- Libera capital para diversificar
+
+**Timeline:** Executar agora (março/2026), enquanto preço está em R$ 89,65
+
+---
+
+**Documento de Análise Completo - BTAL11**  
+*Preparado: Março 2026*  
+*Próxima Revisão Recomendada: Junho 2026 (Após resultado semestral)*  
+
+---
+
+**DISCLAIMER:** Este documento é fornecido apenas para fins educacionais e não constitui recomendação de investimento. Investimentos em FIIs envolvem risco. Rentabilidade passada não garante resultados futuros. Consulte um profissional antes de tomar decisões.
