@@ -9,6 +9,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 const isDev = process.env.NODE_ENV === "development";
+const targets = ["chrome >= 87", "edge >= 88", "firefox >= 78", "safari >= 14"];
 
 export default {
   context: __dirname,
@@ -17,7 +18,7 @@ export default {
     main: "./src/index.tsx",
   },
   resolve: {
-    extensions: [".ts", ".tsx", ".js", ".jsx"],
+    extensions: ["...", ".ts", ".tsx", ".js", ".jsx"],
   },
   devServer: {
     port: 8080,
@@ -32,7 +33,7 @@ export default {
   module: {
     rules: [
       {
-        test: /\.(ts|tsx|js|jsx)$/,
+        test: /\.(jsx?|tsx?)$/,
         use: [
           {
             loader: "builtin:swc-loader",
@@ -48,12 +49,7 @@ export default {
                 },
               },
               env: {
-                targets: [
-                  "chrome >= 87",
-                  "edge >= 88",
-                  "firefox >= 78",
-                  "safari >= 14",
-                ],
+                targets,
               },
             },
           },
@@ -63,7 +59,21 @@ export default {
   },
   plugins: [
     new rspack.HtmlRspackPlugin({ template: "./index.html" }),
-    new ModuleFederationPlugin(mfConfig),
+    new ModuleFederationPlugin({
+      ...mfConfig,
+      remotes: {
+        remote: "remote@http://localhost:8081/remoteEntry.js",
+      },
+      shared: {
+        react: { singleton: true, eager: true, requiredVersion: "^19.0.0" },
+        "react-dom": {
+          singleton: true,
+          eager: true,
+          requiredVersion: "^19.0.0",
+        },
+      },
+      dts: false,
+    }),
     isDev ? new ReactRefreshRspackPlugin() : null,
   ].filter(Boolean),
 };

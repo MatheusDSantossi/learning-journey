@@ -2,14 +2,14 @@
   "name": "product-catalog",
   "version": "1.0.0",
   "main": "index.js",
-  "private": "true",
-  "start": "cross-env NODE_ENV=development rspack serve",
+  "private": true,
   "workspaces": [
     "host",
     "remote"
   ],
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start:host": "npm --workspace host run start",
+    "start:remote": "npm --workspace remote run start"
   },
   "keywords": [],
   "author": "",
