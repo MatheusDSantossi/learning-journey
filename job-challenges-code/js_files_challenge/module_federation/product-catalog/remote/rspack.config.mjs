@@ -1,7 +1,6 @@
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { rspack } from "@rspack/core";
-import { ModuleFederationPlugin } from "@module-federation/enhanced/rspack";
 import ReactRefreshRspackPlugin from "@rspack/plugin-react-refresh";
 import mfConfig from "./module-federation.config.js";
 
@@ -13,7 +12,7 @@ const targets = ["chrome >= 87", "edge >= 88", "firefox >= 78", "safari >= 14"];
 export default {
   context: __dirname,
   target: "web",
-  entry: { main: "./src/index.tsx" },
+  entry: { main: "./src/index.ts" },
   resolve: {
     extensions: ["...", ".ts", ".tsx", ".jsx"],
   },
@@ -54,10 +53,10 @@ export default {
   },
   plugins: [
     new rspack.HtmlRspackPlugin({ template: "./index.html" }),
-    new ModuleFederationPlugin({
+    new rspack.container.ModuleFederationPlugin({
       ...mfConfig,
       exposes: {
-        "./Button": "./src/Button.tsx",
+        "./Reviews": "./src/Reviews.tsx",
       },
       shared: {
         react: { singleton: true, eager: true, requiredVersion: "^19.0.0" },
