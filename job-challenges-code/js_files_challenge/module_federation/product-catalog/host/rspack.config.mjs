@@ -14,7 +14,7 @@ export default {
   context: __dirname,
   target: "web", // <-- required to fix the `.web` error
   entry: {
-    main: "./src/index.ts",
+    main: "./src/index.tsx",
   },
   resolve: {
     extensions: ["...", ".ts", ".tsx", ".js", ".jsx"],

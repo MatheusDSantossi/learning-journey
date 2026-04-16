@@ -1,6 +1,6 @@
 const mfConfig = {
   name: "remote", // required
-  remotes: {}, // can be empty
+  filename: "remoteEntry.js",
   exposes: { "./Reviews": "./src/Reviews.tsx" }, // can be empty
   shared: {
     react: { singleton: true, eager: true, requiredVersion: "^19.0.0" },
