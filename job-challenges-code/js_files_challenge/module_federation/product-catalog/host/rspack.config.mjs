@@ -1,7 +1,6 @@
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { rspack } from "@rspack/core";
-import { ModuleFederationPlugin } from "@module-federation/enhanced/rspack";
 import ReactRefreshRspackPlugin from "@rspack/plugin-react-refresh";
 import mfConfig from "./module-federation.config.js";
 
@@ -15,7 +14,7 @@ export default {
   context: __dirname,
   target: "web", // <-- required to fix the `.web` error
   entry: {
-    main: "./src/index.tsx",
+    main: "./src/index.ts",
   },
   resolve: {
     extensions: ["...", ".ts", ".tsx", ".js", ".jsx"],
@@ -59,7 +58,7 @@ export default {
   },
   plugins: [
     new rspack.HtmlRspackPlugin({ template: "./index.html" }),
-    new ModuleFederationPlugin({
+    new rspack.container.ModuleFederationPlugin({
       ...mfConfig,
       remotes: {
         remote: "remote@http://localhost:8081/remoteEntry.js",
