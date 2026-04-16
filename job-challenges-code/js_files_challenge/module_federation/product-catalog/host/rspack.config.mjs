@@ -13,6 +13,9 @@ const targets = ["chrome >= 87", "edge >= 88", "firefox >= 78", "safari >= 14"];
 export default {
   context: __dirname,
   target: "web", // <-- required to fix the `.web` error
+  client: {
+    overlay: false,
+  },
   entry: {
     main: "./src/index.tsx",
   },
@@ -22,7 +25,9 @@ export default {
   devServer: {
     port: 8080,
     historyApiFallback: true,
-    watchFiles: [path.resolve(__dirname, "src")],
+    //* This is a more robust solution to remove the error, however, disabling the HMR makes the dev slower. So, considering that on prod that won't be necessary we can go with a more simple option which is "client: {overlay: false}"
+    // hot: false,
+    // liveReload: false,
   },
   output: {
     uniqueName: "host",

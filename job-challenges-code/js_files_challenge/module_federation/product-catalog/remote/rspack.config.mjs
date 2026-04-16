@@ -19,7 +19,7 @@ export default {
   devServer: {
     port: 8081,
     historyApiFallback: true,
-    watchFiles: [path.resolve(__dirname, "src")],
+    // watchFiles: [path.resolve(__dirname, "src")],
   },
   output: {
     uniqueName: "remote",

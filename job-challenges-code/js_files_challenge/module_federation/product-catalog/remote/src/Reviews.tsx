@@ -14,6 +14,7 @@ const Reviews: React.FC<ReviewsProps> = ({ productId }) => {
   const [reviews, setReviews] = useState<Review[]>([
     { id: 1, text: "Great product!", rating: 5 },
     { id: 2, text: "Good value", rating: 4 },
+    { id: 3, text: "Nice", rating: 3.5 },
   ]);
 
   const addReview = () => {
@@ -27,7 +28,7 @@ const Reviews: React.FC<ReviewsProps> = ({ productId }) => {
 
   return (
     <div style={{ border: "1px solid #ccc", padding: "1rem" }}>
-      <h3>Reviews for product {productId}</h3>
+      <h3 style={{ color: "red" }}>Reviews for product {productId} 🐜</h3>
       <ul>
         {reviews.map((review) => (
           <li key={review.id}>
