@@ -2,6 +2,7 @@ import React, { lazy, Suspense, useState } from "react";
 
 // Dynamically import the remote component
 const RemoteReviews = lazy(() => import("remote/Reviews"));
+const RemoteCart = lazy(() => import("cart/Cart"));
 
 const products = [
   { id: "1", name: "Laptop" },
@@ -31,6 +32,10 @@ function App() {
           <RemoteReviews productId={selectedProduct} />
         </Suspense>
       )}
+
+      <Suspense fallback={<div>Loading Cart...</div>}>
+        <RemoteCart />
+      </Suspense>
     </div>
   );
 }
