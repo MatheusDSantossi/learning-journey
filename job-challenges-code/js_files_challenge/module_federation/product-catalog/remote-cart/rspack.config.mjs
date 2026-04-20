@@ -12,7 +12,7 @@ const targets = ["chrome >= 87", "edge >= 88", "firefox >= 78", "safari >= 14"];
 export default {
   context: __dirname,
   target: "web",
-  entry: { main: "./src/index.tsx" },
+  entry: { main: "./src/index.ts" },
   resolve: {
     extensions: ["...", ".ts", ".tsx", ".jsx"],
   },

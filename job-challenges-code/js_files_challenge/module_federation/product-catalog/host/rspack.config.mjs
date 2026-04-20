@@ -17,7 +17,7 @@ export default {
     overlay: false,
   },
   entry: {
-    main: "./src/index.tsx",
+    main: "./src/index.ts",
   },
   resolve: {
     extensions: ["...", ".ts", ".tsx", ".js", ".jsx"],

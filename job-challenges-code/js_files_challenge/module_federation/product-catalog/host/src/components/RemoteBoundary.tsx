@@ -53,6 +53,8 @@ class RemoteErrorBoundary extends Component<
       hasError: false,
       error: null,
     });
+
+    window.location.reload();
   };
 
   render() {
