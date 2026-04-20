@@ -59,7 +59,11 @@ export default {
         "./Reviews": "./src/Reviews.tsx",
       },
       shared: {
-        react: { singleton: true, eager: true, requiredVersion: "^19.0.0" },
+        react: {
+          singleton: true,
+          eager: true,
+          requiredVersion: "^19.0.0",
+        },
         "react-dom": {
           singleton: true,
           eager: true,
