@@ -16,7 +16,7 @@
       "*": ["./@mf-types/*"]
     }
   },
-  "include": ["src"],
+  "include": ["src", "../host/src/bootstrap.tsx"],
   "ts-node": {
     "compilerOptions": {
       "module": "CommonJS"
