@@ -1,4 +1,5 @@
-import React, { lazy, Suspense, useState } from "react";
+import { lazy, Suspense, useState } from "react";
+import { RemoteBoundary } from "./components/RemoteBoundary";
 
 // Dynamically import the remote component
 const RemoteReviews = lazy(() => import("remote/Reviews"));
@@ -16,26 +17,38 @@ function App() {
   return (
     <div>
       <h1>Product Catalog</h1>
-      <ul>
-        {products.map((product) => (
-          <li key={product.id}>
-            {product.name}{" "}
-            <button onClick={() => setSelectedProduct(product.id)}>
-              Show Reviews
-            </button>
-          </li>
-        ))}
-      </ul>
 
-      {selectedProduct && (
-        <Suspense fallback={<div>Loading Reviews...</div>}>
-          <RemoteReviews productId={selectedProduct} />
-        </Suspense>
-      )}
+      <section style={{ marginBottom: 24 }}>
+        <h2>Cart</h2>
+        <RemoteBoundary
+          title="Cart"
+          loadingFallback={<div>Loading cart...</div>}
+        >
+          <RemoteCart />
+        </RemoteBoundary>
+      </section>
 
-      <Suspense fallback={<div>Loading Cart...</div>}>
-        <RemoteCart />
-      </Suspense>
+      <section>
+        <ul>
+          {products.map((product) => (
+            <li key={product.id}>
+              {product.name}{" "}
+              <button onClick={() => setSelectedProduct(product.id)}>
+                Show Reviews
+              </button>
+            </li>
+          ))}
+        </ul>
+
+        {selectedProduct && (
+          <RemoteBoundary
+            title="Reviews"
+            loadingFallback={<div>Loading reviews...</div>}
+          >
+            <RemoteReviews productId={selectedProduct} />
+          </RemoteBoundary>
+        )}
+      </section>
     </div>
   );
 }
