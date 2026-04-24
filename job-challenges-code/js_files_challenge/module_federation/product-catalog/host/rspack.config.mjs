@@ -65,10 +65,6 @@ export default {
     new rspack.HtmlRspackPlugin({ template: "./index.html" }),
     new rspack.container.ModuleFederationPlugin({
       ...mfConfig,
-      remotes: {
-        remote: "remote@http://localhost:8081/remoteEntry.js",
-        cart: "cart@http://localhost:8082/remoteEntry.js",
-      },
       shared: {
         react: { singleton: true, eager: true, requiredVersion: "^19.0.0" },
         "react-dom": {

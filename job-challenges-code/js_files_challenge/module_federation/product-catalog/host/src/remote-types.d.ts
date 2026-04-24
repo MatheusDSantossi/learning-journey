@@ -4,6 +4,6 @@ declare module "remote/Reviews" {
 }
 
 declare module "cart/Cart" {
-  const Cart: React.ComponentType<>;
+  const Cart: React.ComponentType<{}>;
   export default Cart;
 }

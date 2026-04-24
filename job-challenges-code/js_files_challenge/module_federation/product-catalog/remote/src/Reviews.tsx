@@ -1,5 +1,9 @@
 import React, { useState } from "react";
 
+const remoteVersions = (window as any).__REMOTE_VERSIONS__ as
+  | Record<string, string>
+  | undefined;
+
 interface Review {
   id: number;
   text: string;
@@ -37,6 +41,7 @@ const Reviews: React.FC<ReviewsProps> = ({ productId }) => {
         ))}
       </ul>
       <button onClick={addReview}>Add Sample Review</button>
+      <small>v{remoteVersions?.cart ?? "unknown"}</small>
     </div>
   );
 };
