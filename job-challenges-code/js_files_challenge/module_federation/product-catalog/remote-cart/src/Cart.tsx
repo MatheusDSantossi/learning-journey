@@ -3,7 +3,7 @@ import React from "react";
 const remoteVersions = (window as any).__REMOTE_VERSIONS__ as
   | Record<string, string>
   | undefined;
-
+  
 export default function Cart() {
   return (
     <div>
