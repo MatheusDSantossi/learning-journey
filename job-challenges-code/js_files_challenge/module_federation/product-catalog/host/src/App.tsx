@@ -1,7 +1,10 @@
-import { lazy, Suspense, useState } from "react";
-import { RemoteBoundary } from "./components/RemoteBoundary";
-import { loadRemote } from "@module-federation/enhanced/runtime";
-import { loadTypedRemote } from "./utils/utilFunctions";
+import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
+import { HomePage } from "./routes/HomePage";
+import { ReviewsRoute } from "./routes/ReviewsRoute";
+import { CartRoute } from "./routes/CartRoute";
+import { loadTypedRemote } from "./remotes/loadTypedRemote";
+import { useState } from "react";
+import ShellLayout from "./components/ShellLayout";
 
 // Dynamically import the remote component
 // const RemoteReviews = lazy(() => import("remote/Reviews"));
@@ -29,41 +32,19 @@ function App() {
   const [selectedProduct, setSelectedProduct] = useState<string | null>(null);
 
   return (
-    <div>
-      <h1>Product Catalog</h1>
-
-      <section style={{ marginBottom: 24 }}>
-        <h2>Cart</h2>
-        <RemoteBoundary
-          title="Cart"
-          loadingFallback={<div>Loading cart...</div>}
-        >
-          <RemoteCart />
-        </RemoteBoundary>
-      </section>
-
-      <section>
-        <ul>
-          {products.map((product) => (
-            <li key={product.id}>
-              {product.name}{" "}
-              <button onClick={() => setSelectedProduct(product.id)}>
-                Show Reviews
-              </button>
-            </li>
-          ))}
-        </ul>
-
-        {selectedProduct && (
-          <RemoteBoundary
-            title="Reviews"
-            loadingFallback={<div>Loading reviews...</div>}
-          >
-            <RemoteReviews productId={selectedProduct} />
-          </RemoteBoundary>
-        )}
-      </section>
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route element={<ShellLayout />}>
+          <Route index element={<HomePage />} />
+          <Route
+            path="products/:productId/reviews"
+            element={<ReviewsRoute />}
+          />
+          <Route path="cart" element={<CartRoute />} />
+          <Route path="*" element={<Navigate to="/" replace />} />
+        </Route>
+      </Routes>
+    </BrowserRouter>
   );
 }
 
