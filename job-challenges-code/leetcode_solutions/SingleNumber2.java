@@ -27,7 +27,7 @@ class CommunitySolution {
             sum %= 3;
             ans |= sum << i;
         }
-
+        // TEST
         return ans;
     }
 }
