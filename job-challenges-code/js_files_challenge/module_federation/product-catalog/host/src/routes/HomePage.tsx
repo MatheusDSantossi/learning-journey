@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import { prefetchRemote } from "../remotes/prefetchRemote";
 
 const products = [
   { id: "1", name: "Laptop" },
@@ -12,24 +13,34 @@ export function HomePage() {
       <h1>Products</h1>
 
       <ul style={{ listStyle: "none", padding: 0 }}>
-        {products.map((product) => (
-          <li
-            key={product.id}
-            style={{
-              padding: "12px 0",
-              borderBottom: "1px solid #e5e5e5",
-              display: "flex",
-              justifyContent: "space-between",
-              alignItems: "center",
-            }}
-          >
-            <span>{product.name}</span>
+        {products.map((product) => {
+          const reviewsScope = "remote/Reviews";
+          
+          return (
+            <li
+              key={product.id}
+              style={{
+                padding: "12px 0",
+                borderBottom: "1px solid #e5e5e5",
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "center",
+              }}
+            >
+              <span>{product.name}</span>
 
-            <div style={{ display: "flex", gap: 12 }}>
-              <Link to={`/products/${product.id}/reviews`}>View reviews</Link>
-            </div>
-          </li>
-        ))}
+              <div style={{ display: "flex", gap: 12 }}>
+                <Link
+                  to={`/products/${product.id}/reviews`}
+                  onMouseEnter={() => prefetchRemote(reviewsScope)}
+                  onFocus={() => prefetchRemote(reviewsScope)}
+                >
+                  View reviews
+                </Link>
+              </div>
+            </li>
+          );
+        })}
       </ul>
     </div>
   );

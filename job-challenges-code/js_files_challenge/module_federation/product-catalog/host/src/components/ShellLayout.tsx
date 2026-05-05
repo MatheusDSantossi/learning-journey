@@ -1,5 +1,6 @@
 import React from "react";
 import { Link, NavLink, Outlet } from "react-router-dom";
+import { prefetchRemote } from "../remotes/prefetchRemote";
 
 const ShellLayout = () => {
   return (
@@ -20,7 +21,11 @@ const ShellLayout = () => {
           </Link>
 
           <nav style={{ display: "flex", gap: 16 }}>
-            <NavLink to="/" end>
+            <NavLink
+              to="/"
+              onMouseEnter={() => prefetchRemote("cart/Cart")}
+              onFocus={() => prefetchRemote("cart/Cart")}
+            >
               Home
             </NavLink>
             <NavLink to="/cart">Cart</NavLink>
