@@ -1,6 +1,10 @@
 import ReactDOM from "react-dom/client";
-import { registerRemotes } from "@module-federation/enhanced/runtime";
+import {
+  registerPlugins,
+  registerRemotes,
+} from "@module-federation/enhanced/runtime";
 import App from "./App";
+import { runtimeFallbackPlugin } from "./remotes/runtimeFallbackPlugin";
 
 type Manifest = Record<string, { entry: string; version: string }>;
 
@@ -12,6 +16,8 @@ async function start() {
   }
 
   const manifest = (await response.json()) as Manifest;
+
+  registerPlugins([runtimeFallbackPlugin()]);
 
   registerRemotes(
     Object.entries(manifest).map(([name, remote]) => ({
