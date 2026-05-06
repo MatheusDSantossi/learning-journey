@@ -4,6 +4,18 @@ type RemoteHealthState = {
   lastError?: string;
 };
 
+type CircuitState = "CLOSED" | "OPEN" | "HALF_OPEN";
+
+const circuits = new Map<
+  string,
+  {
+    state: CircuitState;
+    lastFailure: number;
+  }
+>();
+
+const COOLDOWN = 30000;
+
 const FAILURE_THRESHOLD = 2;
 const OPEN_DURATION_MS = 30_000;
 
@@ -31,33 +43,55 @@ function getState(scope: string): RemoteHealthState {
 }
 
 export function isCircuitOpen(scope: string) {
-  return getState(scope).openUntil > Date.now();
+  const entry = circuits.get(scope);
+
+  if (!entry) return false;
+
+  if (entry.state === "OPEN") {
+    const now = Date.now();
+
+    if (now - entry.lastFailure > COOLDOWN) {
+      // Move to HALF-OPEN
+      entry.state = "HALF_OPEN";
+      return false; // allow retry
+    }
+    return true;
+  }
+  return false;
 }
 
 export function recordRemoteSuccess(scope: string) {
-  states.set(scope, {
-    failures: 0,
-    openUntil: 0,
+  circuits.set(scope, {
+    state: "CLOSED",
+    lastFailure: 0,
   });
+  //   states.set(scope, {
+  //     failures: 0,
+  //     openUntil: 0,
+  //   });
 }
 
 export function recordRemoteFailure(scope: string, error: unknown) {
-  const state = getState(scope);
-  const failures = state.failures + 1;
+    circuits.set(scope, {
+        state: "OPEN",
+        lastFailur
+    })
+//   const state = getState(scope);
+//   const failures = state.failures + 1;
 
-  if (failures >= FAILURE_THRESHOLD) {
-    const openUntil = Date.now() + OPEN_DURATION_MS;
+//   if (failures >= FAILURE_THRESHOLD) {
+//     const openUntil = Date.now() + OPEN_DURATION_MS;
 
-    states.set(scope, { failures, openUntil });
+//     states.set(scope, { failures, openUntil });
 
-    // Notify when cooldown ends
-    setTimeout(() => {
-      const ls = listeners.get(scope);
-      ls?.forEach((fn) => fn());
-    }, OPEN_DURATION_MS);
-  } else {
-    states.set(scope, { failures, openUntil: 0 });
-  }
+//     // Notify when cooldown ends
+//     setTimeout(() => {
+//       const ls = listeners.get(scope);
+//       ls?.forEach((fn) => fn());
+//     }, OPEN_DURATION_MS);
+//   } else {
+//     states.set(scope, { failures, openUntil: 0 });
+//   }
 
   //   const nextFailures = state.failures + 1;
   //   const shouldOpen = nextFailures >= FAILURE_THRESHOLD;
