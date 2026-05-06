@@ -1,10 +1,11 @@
 import { loadRemote } from "@module-federation/enhanced/runtime";
 import { withRemoteTelemetry } from "./telemetry";
+import { isCircuitOpen } from "./remoteHealth";
 
 export function prefetchRemote(scope: string) {
-  void withRemoteTelemetry(scope, () =>
-    loadRemote(scope).catch((error) => {
-      console.debug(`[prefetchRemote] failed for ${scope}`, error);
-    }),
-  );
+  if (isCircuitOpen(scope)) return;
+
+  void withRemoteTelemetry(scope, () => loadRemote(scope)).catch(() => {
+    // telemetry alreadt recorded the failure
+  });
 }

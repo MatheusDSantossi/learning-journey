@@ -21,14 +21,14 @@ const ShellLayout = () => {
           </Link>
 
           <nav style={{ display: "flex", gap: 16 }}>
+            <NavLink to="/">Home</NavLink>
             <NavLink
-              to="/"
+              to="/cart"
               onMouseEnter={() => prefetchRemote("cart/Cart")}
               onFocus={() => prefetchRemote("cart/Cart")}
             >
-              Home
+              Cart
             </NavLink>
-            <NavLink to="/cart">Cart</NavLink>
           </nav>
         </div>
       </header>

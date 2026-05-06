@@ -17,7 +17,8 @@ async function start() {
 
   const manifest = (await response.json()) as Manifest;
 
-  registerPlugins([runtimeFallbackPlugin()]);
+  // !IMPORTANT Removed to test circuit break behavior
+  // registerPlugins([runtimeFallbackPlugin()]);
 
   registerRemotes(
     Object.entries(manifest).map(([name, remote]) => ({
