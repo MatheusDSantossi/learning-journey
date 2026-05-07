@@ -74,7 +74,7 @@ export function recordRemoteSuccess(scope: string) {
 export function recordRemoteFailure(scope: string, error: unknown) {
     circuits.set(scope, {
         state: "OPEN",
-        lastFailur
+        lastFailure: Date.now()
     })
 //   const state = getState(scope);
 //   const failures = state.failures + 1;
