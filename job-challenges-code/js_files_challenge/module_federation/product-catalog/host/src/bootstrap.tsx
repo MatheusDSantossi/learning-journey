@@ -8,6 +8,12 @@ import { runtimeFallbackPlugin } from "./remotes/runtimeFallbackPlugin";
 
 type Manifest = Record<string, { entry: string; version: string }>;
 
+declare global {
+  interface Window {
+    __REMOTE_MANIFEST__?: Manifest;
+  }
+}
+
 async function start() {
   const response = await fetch("/manifest.json", { cache: "no-store" });
 

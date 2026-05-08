@@ -1,15 +1,22 @@
 import { useEffect, useState } from "react";
-import { subscribeToRemoteRecovery } from "../remotes/remoteHealth";
-
+import { resetRemoteCircuit, subscribeToRemoteRecovery } from "../remotes/remoteHealth";
+import { refreshRemote } from "../remotes/refreshRemote";
 
 export function useRemoteRetry(scope: string) {
   const [retryToken, setRetryToken] = useState(0);
 
   useEffect(() => {
-    return subscribeToRemoteRecovery(scope, () => {
+    const timer = setTimeout(() => {
+      refreshRemote(scope);
+      resetRemoteCircuit(scope);
       setRetryToken((t) => t + 1);
-    });
-  }, [scope]);
+    }, 30_000);
+
+    return () => clearTimeout(timer);
+    //   subscribeToRemoteRecovery(scope, () => {
+    //   setRetryToken((t) => t + 1);
+    // });
+  }, [scope, retryToken]);
 
   return retryToken;
 }

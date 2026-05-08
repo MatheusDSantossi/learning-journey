@@ -6,15 +6,13 @@ type RemoteHealthState = {
 
 type CircuitState = "CLOSED" | "OPEN" | "HALF_OPEN";
 
-const circuits = new Map<
-  string,
-  {
-    state: CircuitState;
-    lastFailure: number;
-  }
->();
+type CircuitEntry = {
+  state: CircuitState;
+  openUntil: number;
+};
 
-const COOLDOWN = 30000;
+const circuits = new Map<string, CircuitEntry>();
+const COOLDOWN = 30_000;
 
 const FAILURE_THRESHOLD = 2;
 const OPEN_DURATION_MS = 30_000;
@@ -50,7 +48,7 @@ export function isCircuitOpen(scope: string) {
   if (entry.state === "OPEN") {
     const now = Date.now();
 
-    if (now - entry.lastFailure > COOLDOWN) {
+    if (now >= entry.openUntil) {
       // Move to HALF-OPEN
       entry.state = "HALF_OPEN";
       return false; // allow retry
@@ -63,7 +61,7 @@ export function isCircuitOpen(scope: string) {
 export function recordRemoteSuccess(scope: string) {
   circuits.set(scope, {
     state: "CLOSED",
-    lastFailure: 0,
+    openUntil: 0,
   });
   //   states.set(scope, {
   //     failures: 0,
@@ -72,26 +70,26 @@ export function recordRemoteSuccess(scope: string) {
 }
 
 export function recordRemoteFailure(scope: string, error: unknown) {
-    circuits.set(scope, {
-        state: "OPEN",
-        lastFailure: Date.now()
-    })
-//   const state = getState(scope);
-//   const failures = state.failures + 1;
+  circuits.set(scope, {
+    state: "OPEN",
+    openUntil: 0,
+  });
+  //   const state = getState(scope);
+  //   const failures = state.failures + 1;
 
-//   if (failures >= FAILURE_THRESHOLD) {
-//     const openUntil = Date.now() + OPEN_DURATION_MS;
+  //   if (failures >= FAILURE_THRESHOLD) {
+  //     const openUntil = Date.now() + OPEN_DURATION_MS;
 
-//     states.set(scope, { failures, openUntil });
+  //     states.set(scope, { failures, openUntil });
 
-//     // Notify when cooldown ends
-//     setTimeout(() => {
-//       const ls = listeners.get(scope);
-//       ls?.forEach((fn) => fn());
-//     }, OPEN_DURATION_MS);
-//   } else {
-//     states.set(scope, { failures, openUntil: 0 });
-//   }
+  //     // Notify when cooldown ends
+  //     setTimeout(() => {
+  //       const ls = listeners.get(scope);
+  //       ls?.forEach((fn) => fn());
+  //     }, OPEN_DURATION_MS);
+  //   } else {
+  //     states.set(scope, { failures, openUntil: 0 });
+  //   }
 
   //   const nextFailures = state.failures + 1;
   //   const shouldOpen = nextFailures >= FAILURE_THRESHOLD;
@@ -115,7 +113,10 @@ export function subscribeToRemoteRecovery(scope: string, callback: () => void) {
   };
 }
 
+export function resetRemoteCircuit(scope: string) {
+  circuits.delete(scope);
+}
+
 export function getRemoteFallbackName(scope: string) {
-  const [remoteName] = scope.split("/");
-  return remoteName;
+  return scope.split("/")[0];
 }
