@@ -7,6 +7,7 @@ export function useRemoteRetry(scope: string) {
 
   useEffect(() => {
     const timer = setTimeout(() => {
+       console.info("[useRemoteRetry] firing retry", { scope, retryToken });
       refreshRemote(scope);
       resetRemoteCircuit(scope);
       setRetryToken((t) => t + 1);

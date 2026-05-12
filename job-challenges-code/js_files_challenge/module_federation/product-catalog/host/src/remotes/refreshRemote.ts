@@ -1,4 +1,7 @@
-import { registerRemotes } from "@module-federation/enhanced/runtime";
+import {
+  getInstance,
+  registerRemotes,
+} from "@module-federation/enhanced/runtime";
 
 type Manifest = Record<string, { entry: string; version: string }>;
 
@@ -15,7 +18,14 @@ export function refreshRemote(scope: string) {
   const manifest = window.__REMOTE_MANIFEST__;
   const remote = manifest?.[name];
 
-  if (!remote) return;
+  if (!remote) {
+    console.warn("[refreshRemote] missing manifest entry", {
+      scope,
+      name,
+      manifest,
+    });
+    return;
+  }
 
   window.__REMOTE_REFRESH_TOKENS__ ??= {};
   window.__REMOTE_REFRESH_TOKENS__[name] =
@@ -33,17 +43,27 @@ export function refreshRemote(scope: string) {
     },
   };
 
+  const mf = getInstance();
+
+  if (!mf) {
+    console.warn("[refreshRemote] no MF instance found");
+    return;
+  }
+
   // Clear the old global container if it exists
   delete (window as any)[name];
 
   // Re-register the remote with the fresh URL
-  registerRemotes([
-    {
-      name,
-      alias: name,
-      entry: cacheBustedEntry,
-    },
-  ]);
+  mf.registerRemotes(
+    [
+      {
+        name,
+        alias: name,
+        entry: cacheBustedEntry,
+      },
+    ],
+    { force: true },
+  );
 
   console.info("[refreshRemote]", { name, cacheBustedEntry });
 }

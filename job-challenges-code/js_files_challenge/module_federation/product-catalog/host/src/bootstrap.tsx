@@ -11,6 +11,8 @@ type Manifest = Record<string, { entry: string; version: string }>;
 declare global {
   interface Window {
     __REMOTE_MANIFEST__?: Manifest;
+    __REMOTE_VERSIONS__?: Record<string, string>;
+    __REMOTE_REFRESH_TOKENS__?: Record<string, number>;
   }
 }
 
@@ -22,6 +24,9 @@ async function start() {
   }
 
   const manifest = (await response.json()) as Manifest;
+
+  // Missing piece
+  window.__REMOTE_MANIFEST__ = manifest;
 
   // !IMPORTANT Removed to test circuit break behavior
   // registerPlugins([runtimeFallbackPlugin()]);
