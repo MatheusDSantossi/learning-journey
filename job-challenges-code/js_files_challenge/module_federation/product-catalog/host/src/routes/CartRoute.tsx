@@ -14,8 +14,13 @@ export function CartRoute() {
   );
 
   return (
-    <RemoteBoundary title="Cart" loadingFallback={<div>Loading cart...</div>}>
-      <RemoteCart key={retryToken} />
+    <RemoteBoundary
+      key={retryToken}
+      title="Cart"
+      loadingFallback={<div>Loading cart...</div>}
+      // resetKeys={[String(retryToken)]}
+    >
+      <RemoteCart />
     </RemoteBoundary>
   );
 }

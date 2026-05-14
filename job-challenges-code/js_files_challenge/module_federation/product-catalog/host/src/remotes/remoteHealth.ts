@@ -8,97 +8,94 @@ type CircuitState = "CLOSED" | "OPEN" | "HALF_OPEN";
 
 type CircuitEntry = {
   state: CircuitState;
+  failures: number;
   openUntil: number;
+  lastError?: string;
 };
 
-const circuits = new Map<string, CircuitEntry>();
-const COOLDOWN = 30_000;
+const COOLDOWN_MS = 30_000;
 
 const FAILURE_THRESHOLD = 2;
 const OPEN_DURATION_MS = 30_000;
 
-const states = new Map<string, RemoteHealthState>();
+// const states = new Map<string, RemoteHealthState>();
+const circuits = new Map<string, CircuitEntry>();
 const listeners = new Map<string, Set<() => void>>();
 
-function getState(scope: string): RemoteHealthState {
-  if (!states.has(scope)) {
-    states.set(scope, { failures: 0, openUntil: 0 });
+function ensureCircuit(scope: string): CircuitEntry {
+  let circuit = circuits.get(scope);
+
+  if (!circuit) {
+    circuit = {
+      state: "CLOSED",
+      failures: 0,
+      openUntil: 0,
+    };
+
+    circuits.set(scope, circuit);
   }
 
-  return states.get(scope)!;
-
-  //   const current = states.get(scope);
-  //   if (current) return current;
-
-  //   const initial: RemoteHealthState = {
-  //     failures: 0,
-  //     openUntil: 0,
-  //   };
-
-  //   states.set(scope, initial);
-
-  //   return initial;
+  return circuit;
 }
 
+function notify(scope: string) {
+  listeners.get(scope)?.forEach((callback) => callback());
+}
+
+/**
+ * Returns true only while the circuit is still open and the cooldown has not expired.
+ * If the cooldown expires, the circuit moves to HALF_OPEN and the next load is allowed.
+ */
 export function isCircuitOpen(scope: string) {
-  const entry = circuits.get(scope);
+  const circuit = ensureCircuit(scope);
 
-  if (!entry) return false;
-
-  if (entry.state === "OPEN") {
-    const now = Date.now();
-
-    if (now >= entry.openUntil) {
-      // Move to HALF-OPEN
-      entry.state = "HALF_OPEN";
-      return false; // allow retry
-    }
-    return true;
+  if (circuit.state !== "OPEN") {
+    return false;
   }
-  return false;
+
+  const now = Date.now();
+
+  if (now >= circuit.openUntil) {
+    // Move to HALF-OPEN
+    circuit.state = "HALF_OPEN";
+    notify(scope);
+    return false; // allow retry
+  }
+  return true;
 }
 
 export function recordRemoteSuccess(scope: string) {
-  circuits.set(scope, {
-    state: "CLOSED",
-    openUntil: 0,
-  });
-  //   states.set(scope, {
-  //     failures: 0,
-  //     openUntil: 0,
-  //   });
+  const circuit = ensureCircuit(scope);
+
+  circuit.state = "CLOSED";
+  circuit.failures = 0;
+  circuit.openUntil = 0;
+  delete circuit.lastError;
+
+  notify(scope);
 }
 
 export function recordRemoteFailure(scope: string, error: unknown) {
-  circuits.set(scope, {
-    state: "OPEN",
-    openUntil: 0,
-  });
-  //   const state = getState(scope);
-  //   const failures = state.failures + 1;
+  const circuit = ensureCircuit(scope);
 
-  //   if (failures >= FAILURE_THRESHOLD) {
-  //     const openUntil = Date.now() + OPEN_DURATION_MS;
+  circuit.state = "OPEN";
+  circuit.failures += 1;
+  circuit.openUntil = Date.now() + COOLDOWN_MS;
+  circuit.lastError = error instanceof Error ? error.message : String(error);
 
-  //     states.set(scope, { failures, openUntil });
+  notify(scope);
+}
 
-  //     // Notify when cooldown ends
-  //     setTimeout(() => {
-  //       const ls = listeners.get(scope);
-  //       ls?.forEach((fn) => fn());
-  //     }, OPEN_DURATION_MS);
-  //   } else {
-  //     states.set(scope, { failures, openUntil: 0 });
-  //   }
+export function subscribeToRemoteHealth(scope: string, callback: () => void) {
+  if (!listeners.has(scope)) {
+    listeners.set(scope, new Set());
+  }
 
-  //   const nextFailures = state.failures + 1;
-  //   const shouldOpen = nextFailures >= FAILURE_THRESHOLD;
+  listeners.get(scope)!.add(callback);
 
-  //   states.set(scope, {
-  //     failures: nextFailures,
-  //     openUntil: shouldOpen ? Date.now() + OPEN_DURATION_MS : 0,
-  //     lastError: error instanceof Error ? error.message : String(error),
-  //   });
+  return () => {
+    listeners.get(scope)?.delete(callback);
+  };
 }
 
 export function subscribeToRemoteRecovery(scope: string, callback: () => void) {
@@ -119,4 +116,21 @@ export function resetRemoteCircuit(scope: string) {
 
 export function getRemoteFallbackName(scope: string) {
   return scope.split("/")[0];
+}
+
+export function getRemoteCircuit(scope: string): CircuitEntry {
+  return ensureCircuit(scope);
+}
+
+/**
+ * Optional manual escape hatch.
+ * Not part of normal retry flow.
+ */
+export function forceRemoteRetry(scope: string) {
+  const circuit = ensureCircuit(scope);
+
+  circuit.state = "HALF_OPEN";
+  circuit.openUntil = 0;
+
+  notify(scope);
 }

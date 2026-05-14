@@ -18,6 +18,7 @@ type RemoteBoundaryProps = {
   title: string;
   loadingFallback?: ReactNode;
   children: ReactNode;
+  resetKeys?: string[];
 };
 
 type RemoteBoundaryState = {
@@ -79,9 +80,12 @@ export function RemoteBoundary({
   title,
   loadingFallback = <div>Loading remote...</div>,
   children,
+  resetKeys,
 }: RemoteBoundaryProps) {
+  const key = resetKeys?.length ? resetKeys.join("-") : "remote-key";
+
   return (
-    <RemoteErrorBoundary title={title}>
+    <RemoteErrorBoundary key={key} title={title}>
       <Suspense fallback={loadingFallback}>{children}</Suspense>
     </RemoteErrorBoundary>
   );

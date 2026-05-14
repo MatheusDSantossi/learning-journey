@@ -25,10 +25,12 @@ export function ReviewsRoute() {
 
   return (
     <RemoteBoundary
+      key={retryToken}
       title="Reviews"
       loadingFallback={<div>Loading reviews...</div>}
+      // resetKeys={[String(retryToken)]}
     >
-      <RemoveReviews key={retryToken} productId={productId} />
+      <RemoveReviews productId={productId} />
     </RemoteBoundary>
   );
 }
