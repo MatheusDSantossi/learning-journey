@@ -29,12 +29,12 @@ export function useRemoteRetry(scope: string) {
           ? Math.max(0, circuit.openUntil - Date.now())
           : 0;
 
-      timer = setTimeout(() => {
+      timer = setTimeout(async () => {
         console.info("[useRemoteRetry] firing retry", {
           scope,
           retryToken,
         });
-        refreshRemote(scope);
+        await refreshRemote(scope);
         setRetryToken((token) => token + 1);
       }, delay);
     };

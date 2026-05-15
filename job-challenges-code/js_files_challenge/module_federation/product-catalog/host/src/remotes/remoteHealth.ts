@@ -48,12 +48,16 @@ function notify(scope: string) {
  */
 export function isCircuitOpen(scope: string) {
   const circuit = ensureCircuit(scope);
+  const now = Date.now();
 
   if (circuit.state !== "OPEN") {
     return false;
   }
 
-  const now = Date.now();
+
+  if (now < circuit.openUntil) {
+    return true
+  }
 
   if (now >= circuit.openUntil) {
     // Move to HALF-OPEN
@@ -61,6 +65,7 @@ export function isCircuitOpen(scope: string) {
     notify(scope);
     return false; // allow retry
   }
+  
   return true;
 }
 
