@@ -1,37 +1,12 @@
 import React from "react";
 import { Link, NavLink, Outlet } from "react-router-dom";
 import { prefetchRemote } from "../remotes/prefetchRemote";
+import Navbar from "./Navbar";
 
 const ShellLayout = () => {
   return (
     <div style={{ minHeight: "100vh", background: "#f7f7f8" }}>
-      <header style={{ borderBottom: "1px solid #ddd", background: "#fff" }}>
-        <div
-          style={{
-            maxWidth: 1100,
-            margin: "0 auto",
-            padding: "16px 24px",
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: "center",
-          }}
-        >
-          <Link to="/" style={{ fontWeight: 700, textDecoration: "none" }}>
-            Product Catalog
-          </Link>
-
-          <nav style={{ display: "flex", gap: 16 }}>
-            <NavLink to="/">Home</NavLink>
-            <NavLink
-              to="/cart"
-              onMouseEnter={() => prefetchRemote("cart/Cart")}
-              onFocus={() => prefetchRemote("cart/Cart")}
-            >
-              Cart
-            </NavLink>
-          </nav>
-        </div>
-      </header>
+      <Navbar />
 
       <main style={{ maxWidth: 1100, margin: "0 auto", padding: 24 }}>
         <Outlet />
