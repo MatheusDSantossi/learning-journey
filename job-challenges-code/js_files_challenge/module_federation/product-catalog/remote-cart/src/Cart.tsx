@@ -5,17 +5,6 @@ const remoteVersions = (window as any).__REMOTE_VERSIONS__ as
   | Record<string, string>
   | undefined;
 
-window.dispatchEvent(
-  new CustomEvent("cart:add", {
-    detail: {
-      productId: "123",
-      title: "Keybord",
-      price: 99,
-      quantity: 1,
-    },
-  }),
-);
-
 export default function Cart() {
   return (
     <div>

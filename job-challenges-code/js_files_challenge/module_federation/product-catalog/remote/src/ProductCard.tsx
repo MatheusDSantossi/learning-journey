@@ -5,8 +5,14 @@ type ProductCardProps = {
   quantity: number;
 };
 
-export function ProductCard({ productId, title, price, quantity }: ProductCardProps) {
+export function ProductCard({
+  productId,
+  title,
+  price,
+  quantity,
+}: ProductCardProps) {
   const handleAddToCart = () => {
+    console.log("entered here!");
     window.dispatchEvent(
       new CustomEvent("cart:add", {
         detail: {

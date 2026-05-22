@@ -9,7 +9,7 @@ type CartState = {
   items: CartItem[];
 };
 
-const state: CartState = {
+let state: CartState = {
   items: [],
 };
 
@@ -32,9 +32,21 @@ export function addToCart(item: CartItem) {
   const existing = state.items.find((x) => x.productId === item.productId);
 
   if (existing) {
-    existing.quantity += item.quantity;
+    state = {
+      ...state,
+      items: state.items.map((x) =>
+        x.productId === item.productId
+          ? { ...x, quantity: x.quantity + item.quantity }
+          : x,
+      ),
+    };
+    // existing.quantity += item.quantity;
   } else {
-    state.items.push(item);
+    state = {
+      ...state,
+      items: [...state.items, item],
+    };
+    // state.items.push(item);
   }
 
   emitChange();
