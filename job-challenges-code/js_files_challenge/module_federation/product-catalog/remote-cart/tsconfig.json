@@ -16,7 +16,7 @@
       "*": ["./@mf-types/*"]
     }
   },
-  "include": ["src"],
+  "include": ["src", "../remote/src/ProductCard.tsx"],
   "ts-node": {
     "compilerOptions": {
       "module": "CommonJS"

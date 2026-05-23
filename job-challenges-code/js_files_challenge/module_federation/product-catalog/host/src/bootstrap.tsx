@@ -5,6 +5,7 @@ import {
 } from "@module-federation/enhanced/runtime";
 import App from "./App";
 import { runtimeFallbackPlugin } from "./remotes/runtimeFallbackPlugin";
+import { registerCartEventListeners } from "./events/cart.event";
 
 type Manifest = Record<string, { entry: string; version: string }>;
 
@@ -17,6 +18,8 @@ declare global {
 }
 
 async function start() {
+  const cleanupCartEvent = registerCartEventListeners();
+
   const response = await fetch("/manifest.json", { cache: "no-store" });
 
   if (!response.ok) {
@@ -48,6 +51,8 @@ async function start() {
     document.getElementById("app") as HTMLElement,
   );
   root.render(<App />);
+
+  return cleanupCartEvent;
 }
 
 void start().catch((error) => {
