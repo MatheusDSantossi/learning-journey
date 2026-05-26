@@ -97,6 +97,6 @@ It's worth noting that the compaction activity doesn't change the existing offse
 
 ## Conclusion
 
-Apache Kafka's internal architecture is a well-engineered system designed to handle real-time data streams at scale. Its core components work together to provide data durability, fault tolerance, scalability, and efficient data processing. Understaing Kafka's internals is essential for building robust, high-performance streaming applications and data pipelines in today's data-driven world. As Kafka continues to evolve, it reamins a fundamental tool for organisations dealing with large volumes of real-time data.
+Apache Kafka's internal architecture is a well-engineered system designed to handle real-time data streams at scale. Its core components work together to provide data durability, fault tolerance, scalability, and efficient data processing. Understaing Kafka's internals is essential for building robust, high-performance streaming applications and data pipelines **in** today's data-driven world. As Kafka continues to evolve, it reamins a fundamental tool for organisations dealing with large volumes of real-time data.
 
 [Full post](https://medium.com/@sutanu3011/kafka-a-peek-into-internals-b47b9dc6fd0f)
