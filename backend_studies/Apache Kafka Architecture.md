@@ -16,7 +16,7 @@ At its core, Apache Kafka is a distributed streaming platform designed to handle
 
 Kafka leverages the modern operating system page cache optimisation where the data is kept in main memory (page cache) once read till it gets evicted (minor overhead). Kafka first writes to page cache and then dirty pages get written to the file system efficently.
 
-The design choice was heavuky ubfkyebced by the disk seek performance improvement that we have seen in recent times.
+The design choice was heavily influenced by the disk seek performance improvement that we have seen in recent times.
 
 ## Why Kafka doesn’t use any In-Memory Data Structure or B-Tree structure like RDBMS
 
@@ -49,9 +49,9 @@ Kafka uses RecordBatch interface which groups the messages together to reduce ne
 
 Kafka messages get pushed into topics. Each topics has multiple partitions. Each partions is replicated into topics has multiple servers to ensure durability. Out of all the instances, Kafka maintains one leader and rest replicas turn into followers. Leader ensures the data gets written to the follower's log file successfully, so that in case the current leader fails any of the follower can turn in to leader.
 
-Kafka dynamically maintains a set of in-sync replicas (ISR) that are always in sync with the leader. Only mebers of this set are eligible for election as leader. A write to a Kafka partition is not considered committed until all in-sync replicas have received the write.
+Kafka dynamically maintains a set of in-sync replicas (ISR) that are always in sync with the leader. Only members of this set are eligible for election as leader. A write to a Kafka partition is not considered committed until all in-sync replicas have received the write.
 
-## Below are the  possible message delivery guarantees
+## Below are the possible message delivery guarantees
 
 * At most once: Messages may be lost but are never redelivered.
 * At least once: Messages are never lost but may be redelivered.
@@ -66,9 +66,10 @@ The log file contains below information:
 * BaseOffset: Offset of first message in the batch
 * LastOffset: Offset of last message in the batch
 * Count: Number of messages in the batch
-* Position: Oisutuib of the batch in the file
+* Position: Position of the batch in the file
 * CreatedTime: Created time of last message in the batch
 * Size: Size of the batch (in bytes)
+* Messages: List of messages (& its details) in the batch
 
 The index file contains information related to mapping of relative offset to position in the log file. It contains below information:
 
@@ -83,9 +84,9 @@ Kafka needs to retain messages and to do that it needs to optmise the storage. O
 
 Log compaction is a mechanism to give finer-grained per-record retention, rather than the coarser-gained time-based retention.
 
-It's worth noting that the compaction activity doesn't hcange the existing offset by adjusting for the detled records;
+It's worth noting that the compaction activity doesn't change the existing offset by adjusting for the deleted records;
 
-[image 2](https://miro.medium.com/v2/resize:fit:640/format:webp/)1*kCzkvrvT-A6xEgpf65RKzQ.png
+[image 2](https://miro.medium.com/v2/resize:fit:640/format:webp/1*kCzkvrvT-A6xEgpf65RKzQ.png)
 
 ## Why do consumers need to pull the data from Kafka broker?
 
