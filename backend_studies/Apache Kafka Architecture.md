@@ -12,7 +12,7 @@ At its core, Apache Kafka is a distributed streaming platform designed to handle
 * Topics: The topics are the entities which store the messages published to it.
 * Partitions: Each topic is divided into multiple partitions, Kafka ensures that messages are never lost through partition replication once it's acknowledged.
 
-## Why Kadfka uses File System?
+## Why Kafka uses File System?
 
 Kafka leverages the modern operating system page cache optimisation where the data is kept in main memory (page cache) once read till it gets evicted (minor overhead). Kafka first writes to page cache and then dirty pages get written to the file system efficently.
 
@@ -80,7 +80,7 @@ Kafka uses index & log files to quickly extract the message for a given offset.
 
 ## How Kafka maintains the data for so long?
 
-Kafka needs to retain messages and to do that it needs to optmise the storage. One of the optimisation technique is log compaction. Log compaction ensures that Kafka will alawys retain at least the last known value for each message key within the log of data for a single topic partition. (Q: "Does log compaction is active from the start or does it start in the middle?". A: It is active from beginning. The Log Cleaner Thread keeps checking and performs the compaction. Point to note is these are configurable. For more you can refer to this: [Design Compaction Config](https://kafka.apache.org/documentation/#design_compactionconfig)). The idea is to selectively remove records where we have amore recent update with the same primary key. Anytime there is a failure, system would be able to bring the last committed state back by reprocessing the messages from the log.
+Kafka needs to retain messages and to do that it needs to optmise the storage. One of the optimisation technique is log compaction. Log compaction ensures that Kafka will alawys retain at least the last known value for each message key within the log of data for a single topic partition. (Q: "Does log compaction is active from the start or does it start in the middle?". A: It is active from beginning. The Log Cleaner Thread keeps checking and performs the compaction. Point to note is these are configurable. For more you can refer to this: [Design Compaction Config](https://kafka.apache.org/documentation/#design_compactionconfig)). The idea is to selectively remove records where we have a more recent update with the same primary key. Anytime there is a failure, system would be able to bring the last committed state back by reprocessing the messages from the log.
 
 Log compaction is a mechanism to give finer-grained per-record retention, rather than the coarser-gained time-based retention.
 
@@ -91,12 +91,12 @@ It's worth noting that the compaction activity doesn't change the existing offse
 ## Why do consumers need to pull the data from Kafka broker?
 
 * In a push-based system it's difficult to deal with diverse consumers because the broker would control the rate at which data is pushed.
-* In a push system a consumer can get overwhelmed when its rate of consumption falls below he rate of production (similar to a denial of service attack).
+* In a push system a consumer can get overwhelmed when its rate of consumption falls below the rate of production (similar to a denial of service attack).
 * Pull-based system enables the consumer to catch up when it can, if it falls behind production. The consumer can indicate it is overwhelmed and catch up can be implemented with some kind of backoff protocol.
 * Pull-based system enables aggresive batching of data sent to the consumer. In constrat, a push-based system must either send a request immediately or accumulate more data and then sends it later without knowledge of whether the downstream consumer will be able to process it immediately.
 
 ## Conclusion
 
-Apache Kafka's internal architecture is a well-engineered system designed to handle real-time data streams at scale. Its core components work together to provide data durability, fault tolerance, scalability, and efficient data processing. Understaing Kafka's internals is essential for building robust, high-performance streaming applications and data pipelines **in** today's data-driven world. As Kafka continues to evolve, it reamins a fundamental tool for organisations dealing with large volumes of real-time data.
+Apache Kafka's internal architecture is a well-engineered system designed to handle real-time data streams at scale. Its core components work together to provide data durability, fault tolerance, scalability, and efficient data processing. Understading Kafka's internals is essential for building robust, high-performance streaming applications and data pipelines **in** today's data-driven world. As Kafka continues to evolve, it reamins a fundamental tool for organisations dealing with large volumes of real-time data.
 
 [Full post](https://medium.com/@sutanu3011/kafka-a-peek-into-internals-b47b9dc6fd0f)

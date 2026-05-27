@@ -5,8 +5,8 @@
 ## Quick refresher
 
 * **Partition**: A partition is a fundamental unit of parallelism and scalability within a Kafka topic. Each topic in Kafka is divided into one or more partitions to enable parallel processing and Kafka distributes partitions across multiple brokers.
-* **Broker**: A broker is a server within the Kafka cluster that handles the storage, processing, and transportation of data. Brokers are responsible for maintaing topic logs, data replication, data durability, and also serving data to consumers
-* **In-Sync replicas**: A list of replicas that are fully synchronized with the leader replica for a given partition, spanned across multiple physical servers for fault tolerance. These replcias have all the committed messages that the leader has.
+* **Broker**: A broker is a server within the Kafka cluster that handles the storage, processing, and transportation of data. Brokers are responsible for maintaining topic logs, data replication, data durability, and also serving data to consumers
+* **In-Sync replicas**: A list of replicas that are fully synchronized with the leader replica for a given partition, spanned across multiple physical servers for fault tolerance. These replicas have all the committed messages that the leader has.
 * **Leader replica**: A leader replica is the primary replica for a given partition that handles all the read and write requests. It is the authoritative source for data in that partition and coordinates with the follower replicas to ensure data consistency and fault tolerance.
 * **Consumer group**: A consumer group is a collection of consumers that work together to consume messages from one or more partitions. Consumer groups provide a way to achieve parallel data processing and load balacing.
 * **Consumer Group Coordinator**: Coordinator manages partition assignments, offset commits, and consumer health. Consumers share partition ownership within a group, and assignments change when consumers join or leave, or when partitions are added.
@@ -24,7 +24,7 @@
 
 1. Each partition in a topic is consumed by exactly one consumer within a consumer group. If you have more partitions than consumers, some consumers will read from multiple partitions.
 2. You can increase the numbers of consumers in a consumer group to increase the parallelism and throughput of your application
-3. If a consumer in a group fails, Kafka will automatically rebalance the partitons among the remaining ocnsumers to ensure continuous processing.
+3. If a consumer in a group fails, Kafka will automatically rebalance the partitons among the remaining consumers to ensure continuous processing.
 4. Each consumer group has its own offset for each partition, allowing different consumer groups to consume the same messages independently at their own pace. This is to broadcast information among multiple consumers (downstream applications).
 
 ## Typical interaction between partitions and consumer group
@@ -46,7 +46,7 @@ If Consumer 1 fails, Kafka will rebalance the partitions, and Consumer 2 might e
 
 [rebalacing](https://miro.medium.com/v2/resize:fit:640/format:webp/1*HBitFLxpQVkk12oMs5lefw.jpeg)
 
-Kafka partitons are assigned to consumers and the assignment gets impacted when a consumer fails, joins the cluster or leaves voluntarily. This process is called rebalacing.
+Kafka partitons are assigned to consumers and the assignment gets impacted when a consumer fails, joins the cluster or leaves voluntarily. This process is called rebalancing.
 
 ### Rebalance types
 
@@ -55,15 +55,15 @@ Kafka partitons are assigned to consumers and the assignment gets impacted when 
 
 ## How does cooperative rebalance works internally?
 
-Cooperative Rebalancing is designed to allow consumers to give up ownership of their partitions gradually, rather than all at aonce, which minimizes the impact on ongoing consumption. The protocol involves two phases post trigger: revocation and assignment.
+Cooperative Rebalancing is designed to allow consumers to give up ownership of their partitions gradually, rather than all at once, which minimizes the impact on ongoing consumption. The protocol involves two phases post trigger: revocation and assignment.
 
 **Rebalance Phases:**
 
 * Trigger: Consumers continue to send heartbeats to indicate they are active. If a consumer fails to send heartbeats withing the session timeout, it is considereded dead, and a new rebalance is triggered. Similarly the rebalance gets triggered for new consumer addition.
-* Revocation Phase: The group coordinator sends a REVOKE message to consumers, indicatins which subset of partitions (note, it's not all partitions) they should stop consuming. Consumers commit offsets and stop consuming from the revoked partitions.
+* Revocation Phase: The group coordinator sends a REVOKE message to consumers, indicating which subset of partitions (note, it's not all partitions) they should stop consuming. Consumers commit offsets and stop consuming from the revoked partitions.
 * Assignment Phase:
-  1. The coordinator calculates the new assignments, taking into account the partitons that were just revoked. The coodinator sends SSIGN messages to consumers, indicating their new partition assignments.
-  2. Consumers acknowledge the new assignments and begin consuming from their new partitons. This incremental approach continues until all necessary partitons are reassigned.
+  1. The coordinator calculates the new assignments, taking into account the partitons that were just revoked. The coodinator sends SIGNS messages to consumers, indicating their new partition assignments.
+  2. Consumers acknowledge the new assignments and begin consuming from their new partitions. This incremental approach continues until all necessary partitions are reassigned.
 
 ---
 
@@ -115,7 +115,7 @@ In that case, the broker will end up having the same message twice.
 
 ### How producer idempotence works
 
-Producer idempotence ensures that duplicates are not introduced due to unexpected retries.
+Producer idempotence (meaning, something that can happens multiples times without changing the result) ensures that duplicates are not introduced due to unexpected retries.
 
 When enable.idempotence is set to true, each producer gets assigned a Producer Id (PID) and the PID is included every time a producer sends messages to a broker. Additionally, each message gets a monotonically increasing sequence number (different from the offset, used only for protocol purposes). A separate sequence is maintained for each topic partition that a producer sends messages to. On the broker side, on a per partition basis, it keeps track of the largest PID-Sequence Number combination that is successfully written. When a lower sequence number is received, it is discarded.
 
@@ -142,7 +142,7 @@ In an essence we need to ensure our processing logic is capable of handling dupl
 If ordering is important, first thing we need to evaluate is if Kafka is a right choice. If we are sticking to Kafka we will need to leverage the idea that message ordering is ensured in individual partitions of a topic.
 
 1. **One Partition:** If we have only one partiton the ordering is always ensured. Not a practical solution for a high volume production application.
-2. **One consumer:** If we have only one consumer we can apply business logic in consumer to maintain the ordering. not a practical solution for a hight volume production application.
+2. **One consumer:** If we have only one consumer we can apply business logic in consumer to maintain the ordering. Not a practical solution for a hight volume production application.
 3. **Key based partition assignment:** Use a consistent hashing strategy based on message keys to assign messages to partitions. Messages with the same key will always be sent to the same partition, preserving the order for that key. It works seamlessly till we perform re-partitioning so it's not an ideal solution for applications where frequent repartitioning happens.
 4. **Compacted topic:** A compacted topic is designed to retain only the latest value for each unique key within the topic. Unlike topics, which retain all messages for a specified retention period, a compacted topic continuosly removes older update for each key is kept. It is useful for business applications that have requirement to track only the latest status. This can be done by setting **cleanup.policy=compact**.
 
