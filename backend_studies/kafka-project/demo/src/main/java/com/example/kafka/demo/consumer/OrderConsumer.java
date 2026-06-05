@@ -1,54 +1,40 @@
 package com.example.kafka.demo.consumer;
 
 import com.example.kafka.demo.dto.OrderCreatedEvent;
-
-import java.util.HashSet;
-import java.util.Set;
-
+import com.example.kafka.demo.entity.OrderEntity;
+import com.example.kafka.demo.repository.OrderRepository;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.kafka.support.Acknowledgment;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+
 @Service
 public class OrderConsumer {
-    private final Set<String> processedOrders = new HashSet<>();
+    private final OrderRepository orderRepository;
+
+    public OrderConsumer(OrderRepository orderRepository) {
+        this.orderRepository = orderRepository;
+    }
 
     @KafkaListener(topics = "orders", groupId = "order-group")
     public void consume(ConsumerRecord<String, OrderCreatedEvent> record, Acknowledgment acknowledgment) {
-        String orderId = record.value().getOrderId();
+        OrderCreatedEvent event = record.value();
 
-        if (processedOrders.contains(orderId)) {
-            System.out.println(
-                    "Duplicate message detected: " + orderId);
+        System.out.println("Received event: " + event);
 
+        if (orderRepository.existsByOrderId(event.getOrderId())) {
+            System.out.println("Duplicate order ignored: " + event.getOrderId());
             acknowledgment.acknowledge();
             return;
         }
 
-        if ("ORD-999".equals(orderId)) {
-            throw new RuntimeException("Simulated crash");
-        }
+        OrderEntity order = OrderEntity.builder().orderId(event.getOrderId()).customerId(event.getCustomerId()).amount(event.getAmount()).createdAt(LocalDateTime.now()).build();
 
-        processedOrders.add(orderId);
+        orderRepository.save(order);
 
-        // System.out.println("----- MESSAGE RECEIVED -----");
-        // System.out.println("Key: " + record.key());
-        // System.out.println("Partition: " + record.partition());
-        // System.out.println("Offset: " + record.offset());
-        // System.out.println("Value: " + record.value());
-
-        // System.out.println("record.value().getOrderId(): " +
-        // record.value().getOrderId());
-        // if ("ORD-2".equals(record.value().getOrderId())) {
-        // try {
-
-        // throw new RuntimeException("Simulated failure");
-        // } catch (RuntimeException error) {
-        // // Handle the exception
-        // System.out.println("Exception caught: " + error.getMessage());
-        // }
-        // }
+        System.out.println("Order saved to PostgreSQL: " + event.getOrderId());
 
         acknowledgment.acknowledge();
     }
