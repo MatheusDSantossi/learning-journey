@@ -1,21 +1,17 @@
 package com.example.kafka.demo.consumer;
 
 import com.example.kafka.demo.dto.OrderCreatedEvent;
-import com.example.kafka.demo.entity.OrderEntity;
-import com.example.kafka.demo.repository.OrderRepository;
+import com.example.kafka.demo.service.OrderService;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.kafka.support.Acknowledgment;
 import org.springframework.stereotype.Service;
-
-import java.time.LocalDateTime;
-
 @Service
 public class OrderConsumer {
-    private final OrderRepository orderRepository;
+    private final OrderService orderService;
 
-    public OrderConsumer(OrderRepository orderRepository) {
-        this.orderRepository = orderRepository;
+    public OrderConsumer(OrderService orderService) {
+        this.orderService = orderService;
     }
 
     @KafkaListener(topics = "orders", groupId = "order-group")
@@ -24,17 +20,21 @@ public class OrderConsumer {
 
         System.out.println("Received event: " + event);
 
-        if (orderRepository.existsByOrderId(event.getOrderId())) {
-            System.out.println("Duplicate order ignored: " + event.getOrderId());
-            acknowledgment.acknowledge();
-            return;
-        }
+        // Simplifying consumer
 
-        OrderEntity order = OrderEntity.builder().orderId(event.getOrderId()).customerId(event.getCustomerId()).amount(event.getAmount()).createdAt(LocalDateTime.now()).build();
+        orderService.handleOrderCreated(event);
 
-        orderRepository.save(order);
+        // if (orderRepository.existsByOrderId(event.getOrderId())) {
+        //     System.out.println("Duplicate order ignored: " + event.getOrderId());
+        //     acknowledgment.acknowledge();
+        //     return;
+        // }
 
-        System.out.println("Order saved to PostgreSQL: " + event.getOrderId());
+        // OrderEntity order = OrderEntity.builder().orderId(event.getOrderId()).customerId(event.getCustomerId()).amount(event.getAmount()).createdAt(LocalDateTime.now()).build();
+
+        // orderRepository.save(order);
+
+        // System.out.println("Order saved to PostgreSQL: " + event.getOrderId());
 
         acknowledgment.acknowledge();
     }
