@@ -1,6 +1,7 @@
 package com.example.kafka.demo.controller;
 
 import com.example.kafka.demo.entity.DeadLetterEvent;
+import com.example.kafka.demo.entity.DeadLetterStatus;
 import com.example.kafka.demo.repository.DeadLetterEventRepository;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,8 +16,13 @@ public class DeadLetterQueryController {
         this.repository = repository;
     }
 
-    @GetMapping
+    @GetMapping("/pending")
     public List<DeadLetterEvent> listPending() {
-        return repository.findByReplayedFalseOrderByFailedAtDesc();
+        return repository.findByStatusOrderByFailedAtDesc(DeadLetterStatus.PENDING);
+    }
+
+    @GetMapping("/all")
+    public List<DeadLetterEvent> listAll() {
+        return repository.findAll();
     }
 }

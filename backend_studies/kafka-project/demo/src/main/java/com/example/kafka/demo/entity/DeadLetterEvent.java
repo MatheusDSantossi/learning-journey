@@ -2,6 +2,7 @@ package com.example.kafka.demo.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
+import com.example.kafka.demo.entity.DeadLetterStatus;
 
 import java.time.LocalDateTime;
 
@@ -33,7 +34,11 @@ public class DeadLetterEvent {
 
     private LocalDateTime failedAt;
 
-    private boolean replayed;
+    @Enumerated(EnumType.STRING)
+    private DeadLetterStatus status;
 
     private LocalDateTime replayedAt;
+
+    @Column(columnDefinition = "TEXT")
+    private String replayError;
 }

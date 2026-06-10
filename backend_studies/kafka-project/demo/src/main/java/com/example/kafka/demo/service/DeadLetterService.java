@@ -1,6 +1,7 @@
 package com.example.kafka.demo.service;
 
 import com.example.kafka.demo.dto.OrderCreatedEvent;
+import com.example.kafka.demo.entity.DeadLetterStatus;
 import com.example.kafka.demo.entity.DeadLetterEvent;
 import com.example.kafka.demo.repository.DeadLetterEventRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -41,9 +42,9 @@ public class DeadLetterService {
                     .messageKey(messageKey)
                     .payloadJson(objectMapper.writeValueAsString(payload))
                     .exceptionMessage(exceptionMessage)
-                    .failedAt(LocalDateTime.now())
-                    .replayed(false)
+                    .failedAt(LocalDateTime.now()).status(DeadLetterStatus.PENDING)
                     .build();
+                    // .replayed(false)
 
             System.out.println("DLT payload class: " + payload.getClass());
             System.out.println("DLT payload json: " + objectMapper.writeValueAsString(payload));
@@ -62,7 +63,7 @@ public class DeadLetterService {
         DeadLetterEvent dlt = repository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("DLT Event not found: " + id));
 
-        if (dlt.isReplayed()) {
+        if (dlt.getStatus() == DeadLetterStatus.REPLAYED) {
             System.out.println("Event already replayed: " + id);
             return;
         }
@@ -77,12 +78,17 @@ public class DeadLetterService {
                     dlt.getMessageKey(),
                     event);
 
-            dlt.setReplayed(true);
+            dlt.setStatus(DeadLetterStatus.REPLAYED);
             dlt.setReplayedAt(LocalDateTime.now());
+            dlt.setReplayError(null);
             repository.save(dlt);
 
             System.out.println("Replayed dead-letter event: " + id);
         } catch (Exception e) {
+            dlt.setStatus(DeadLetterStatus.REPLAY_FAILED);
+            dlt.setReplayError(e.getMessage());
+            repository.save(dlt);
+
             throw new RuntimeException("Failed to replay dead-letter event " + id, e);
         }
     }
