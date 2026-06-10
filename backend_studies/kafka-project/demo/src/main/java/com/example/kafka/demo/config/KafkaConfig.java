@@ -1,7 +1,7 @@
 package com.example.kafka.demo.config;
 
 import com.example.kafka.demo.dto.OrderCreatedEvent;
-import org.apache.kafka.clients.consumer.ConsumerConfig;
+import org.springframework.kafka.listener.ContainerProperties;
 import org.apache.kafka.common.TopicPartition;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -36,4 +36,15 @@ public class KafkaConfig {
 
         return factory;
     }
+
+    @Bean
+    public ConcurrentKafkaListenerContainerFactory<String, OrderCreatedEvent> dltKafkaListenerContainerFactory(
+        ConsumerFactory<String, OrderCreatedEvent> consumerFactory) {
+            ConcurrentKafkaListenerContainerFactory<String, OrderCreatedEvent> factory = new ConcurrentKafkaListenerContainerFactory<>();
+
+        factory.setConsumerFactory(consumerFactory);
+        factory.getContainerProperties().setAckMode(ContainerProperties.AckMode.MANUAL);
+
+        return factory;
+        }
 }

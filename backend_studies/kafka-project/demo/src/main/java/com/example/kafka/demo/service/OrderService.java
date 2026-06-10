@@ -26,9 +26,9 @@ public class OrderService {
             throw new IllegalArgumentException("orderId cannot be null or blank");
         }
 
-        if ("ORD-DLT".equals(event.getOrderId())) {
-            throw new RuntimeException("Simulated database failure");
-        }
+        // if ("ORD-DLT".equals(event.getOrderId())) {
+        //     throw new RuntimeException("Simulated database failure");
+        // }
 
         if (orderRepository.existsByOrderId(event.getOrderId())) {
             System.out.println("Duplicate order ignored: " + event.getOrderId());
