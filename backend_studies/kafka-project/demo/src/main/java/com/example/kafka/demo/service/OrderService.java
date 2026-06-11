@@ -35,7 +35,8 @@ public class OrderService {
             return;
         }
 
-        OrderEntity order = OrderEntity.builder().orderId(event.getOrderId()).customerId(event.getCustomerId()).amount(event.getAmount()).createdAt(LocalDateTime.now()).build();
+        OrderEntity order = OrderEntity.builder().orderId(event.getOrderId()).customerId(event.getCustomerId())
+                .amount(event.getAmount()).createdAt(LocalDateTime.now()).build();
 
         orderRepository.save(order);
 

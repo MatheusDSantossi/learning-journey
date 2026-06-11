@@ -41,4 +41,6 @@ public class DeadLetterEvent {
 
     @Column(columnDefinition = "TEXT")
     private String replayError;
+
+    private Integer replayAttempts;
 }
