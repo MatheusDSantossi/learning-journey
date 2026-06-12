@@ -15,12 +15,13 @@ import org.springframework.util.backoff.FixedBackOff;
 @Configuration
 public class KafkaConfig {
     @Bean
-    public ConcurrentKafkaListenerContainerFactory<String, OrderCreatedEvent> kafkaListenerContainerFactory(
+    public ConcurrentKafkaListenerContainerFactory<String, OrderCreatedEvent> dltKafkaListenerContainerFactory(
             ConsumerFactory<String, OrderCreatedEvent> consumerFactory, KafkaTemplate<String, OrderCreatedEvent> kafkaTemplate) {
 
         ConcurrentKafkaListenerContainerFactory<String, OrderCreatedEvent> factory = new ConcurrentKafkaListenerContainerFactory<>();
 
         factory.setConsumerFactory(consumerFactory);
+        factory.getContainerProperties().setAckMode(ContainerProperties.AckMode.MANUAL);
 
         
         DeadLetterPublishingRecoverer recoverer = new DeadLetterPublishingRecoverer(
@@ -38,7 +39,7 @@ public class KafkaConfig {
     }
 
     @Bean
-    public ConcurrentKafkaListenerContainerFactory<String, OrderCreatedEvent> dltKafkaListenerContainerFactory(
+    public ConcurrentKafkaListenerContainerFactory<String, OrderCreatedEvent> factKafkaListenerContainerFactory(
         ConsumerFactory<String, OrderCreatedEvent> consumerFactory) {
             ConcurrentKafkaListenerContainerFactory<String, OrderCreatedEvent> factory = new ConcurrentKafkaListenerContainerFactory<>();
 
