@@ -1,6 +1,6 @@
 package com.example.kafka.demo.consumer;
 
-import com.example.kafka.demo.dto.OrderCreatedEvent;
+import com.example.kafka.demo.dto.CreateOrderCommand;
 import com.example.kafka.demo.service.DeadLetterService;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.springframework.kafka.annotation.KafkaListener;
@@ -19,7 +19,7 @@ public class OrderDltConsumer {
 
     @KafkaListener(topics = "orders.DLT", groupId = "order-dlt-group", containerFactory = "dltKafkaListenerContainerFactory")
     public void consumeDlt(
-            ConsumerRecord<String, OrderCreatedEvent> record,
+            ConsumerRecord<String, CreateOrderCommand> record,
             @Header(name = KafkaHeaders.DLT_EXCEPTION_MESSAGE, required = false) String exceptionMessage,
             @Header(name = KafkaHeaders.DLT_ORIGINAL_TOPIC, required = false) String originalTopic,
             @Header(name = KafkaHeaders.DLT_ORIGINAL_PARTITION, required = false) Integer originalPartition,

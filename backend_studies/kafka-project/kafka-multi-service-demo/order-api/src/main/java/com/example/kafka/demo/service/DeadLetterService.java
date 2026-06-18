@@ -1,6 +1,6 @@
 package com.example.kafka.demo.service;
 
-import com.example.kafka.demo.dto.OrderCreatedEvent;
+import com.example.kafka.demo.dto.CreateOrderCommand;
 import com.example.kafka.demo.entity.DeadLetterEvent;
 import com.example.kafka.demo.entity.DeadLetterStatus;
 import com.example.kafka.demo.metrics.KafkaMetricsService;
@@ -16,13 +16,13 @@ import java.util.List;
 @Service
 public class DeadLetterService {
     private final DeadLetterEventRepository repository;
-    private final KafkaTemplate<String, OrderCreatedEvent> kafkaTemplate;
+    private final KafkaTemplate<String, CreateOrderCommand> kafkaTemplate;
     private final ObjectMapper objectMapper;
     private final KafkaMetricsService kafkaMetricsService;
 
     public DeadLetterService(
             DeadLetterEventRepository repository,
-            KafkaTemplate<String, OrderCreatedEvent> kafkaTemplate,
+            KafkaTemplate<String, CreateOrderCommand> kafkaTemplate,
             ObjectMapper objectMapper,
             KafkaMetricsService kafkaMetricsService) {
         this.repository = repository;
@@ -37,7 +37,7 @@ public class DeadLetterService {
             Integer originalPartition,
             Long originalOffset,
             String messageKey,
-            OrderCreatedEvent payload,
+            CreateOrderCommand payload,
             String exceptionMessage) {
         try {
             DeadLetterEvent dlt = DeadLetterEvent.builder()
@@ -84,9 +84,9 @@ public class DeadLetterService {
                 return;
             }
 
-            OrderCreatedEvent event = objectMapper.readValue(
+            CreateOrderCommand event = objectMapper.readValue(
                     dlt.getPayloadJson(),
-                    OrderCreatedEvent.class);
+                    CreateOrderCommand.class);
 
             kafkaTemplate.send(
                     dlt.getOriginalTopic(),

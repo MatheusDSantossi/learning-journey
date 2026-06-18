@@ -1,5 +1,6 @@
 rootProject.name = 'kafka-multi-service-demo'
 
 include 'order-api'
+include 'order-service'
 include 'payment-service'
 include 'notification-service'

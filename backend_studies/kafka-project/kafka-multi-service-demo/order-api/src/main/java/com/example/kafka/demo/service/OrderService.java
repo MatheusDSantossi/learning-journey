@@ -1,6 +1,6 @@
 package com.example.kafka.demo.service;
 
-import com.example.kafka.demo.dto.OrderCreatedEvent;
+import com.example.kafka.demo.dto.CreateOrderCommand;
 import com.example.kafka.demo.entity.OrderEntity;
 import com.example.kafka.demo.metrics.KafkaMetricsService;
 import com.example.kafka.demo.repository.OrderRepository;
@@ -20,7 +20,7 @@ public class OrderService {
     }
 
     @Transactional
-    public void handleOrderCreated(OrderCreatedEvent event) {
+    public void handleOrderCreated(CreateOrderCommand event) {
         var sample = kafkaMetricsService.startOrderProcessingTimer();
 
         try {

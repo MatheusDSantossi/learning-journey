@@ -20,7 +20,7 @@ public class NotificationConsumer {
         groupId = "notification-group"
     )
     public void consue(ConsumerRecord<String, PaymentApprovedEvent> record, Acknowledgment acknowledgment) {
-        System.out.prinln("Received PaymentApproved event: ");
+        System.out.println("Received PaymentApproved event: ");
         System.out.println(record.value());
 
         notificationService.sendNotification(record.value());

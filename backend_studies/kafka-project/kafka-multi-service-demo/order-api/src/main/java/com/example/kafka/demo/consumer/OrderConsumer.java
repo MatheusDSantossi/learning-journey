@@ -1,11 +1,12 @@
 package com.example.kafka.demo.consumer;
 
-import com.example.kafka.demo.dto.OrderCreatedEvent;
+import com.example.kafka.demo.dto.CreateOrderCommand;
 import com.example.kafka.demo.service.OrderService;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.kafka.support.Acknowledgment;
 import org.springframework.stereotype.Service;
+
 @Service
 public class OrderConsumer {
     private final OrderService orderService;
@@ -15,8 +16,8 @@ public class OrderConsumer {
     }
 
     @KafkaListener(topics = "orders", groupId = "order-group")
-    public void consume(ConsumerRecord<String, OrderCreatedEvent> record, Acknowledgment acknowledgment) {
-        OrderCreatedEvent event = record.value();
+    public void consume(ConsumerRecord<String, CreateOrderCommand> record, Acknowledgment acknowledgment) {
+        CreateOrderCommand event = record.value();
 
         System.out.println("Received event: " + event);
 
@@ -25,12 +26,13 @@ public class OrderConsumer {
         orderService.handleOrderCreated(event);
 
         // if (orderRepository.existsByOrderId(event.getOrderId())) {
-        //     System.out.println("Duplicate order ignored: " + event.getOrderId());
-        //     acknowledgment.acknowledge();
-        //     return;
+        // System.out.println("Duplicate order ignored: " + event.getOrderId());
+        // acknowledgment.acknowledge();
+        // return;
         // }
 
-        // OrderEntity order = OrderEntity.builder().orderId(event.getOrderId()).customerId(event.getCustomerId()).amount(event.getAmount()).createdAt(LocalDateTime.now()).build();
+        // OrderEntity order =
+        // OrderEntity.builder().orderId(event.getOrderId()).customerId(event.getCustomerId()).amount(event.getAmount()).createdAt(LocalDateTime.now()).build();
 
         // orderRepository.save(order);
 

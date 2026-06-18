@@ -1,6 +1,6 @@
 package com.example.kafka.demo.controller;
 
-import com.example.kafka.demo.dto.OrderCreatedEvent;
+import com.example.kafka.demo.dto.CreateOrderCommand;
 import com.example.kafka.demo.producer.OrderProducer;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -13,9 +13,9 @@ public class OrderController {
 
     @PostMapping
     public String createOrder(
-            @RequestBody OrderCreatedEvent event) {
-        producer.send(event);
+            @RequestBody CreateOrderCommand command) {
+        producer.send(command);
 
-        return "Order event published";
+        return "Order command published";
     }
 }
