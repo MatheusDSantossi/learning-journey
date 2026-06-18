@@ -1,6 +1,29 @@
 spring:
+  application:
+    name: notification-service
+
+  kafka:
+    bootstrap-servers: localhost:9092
+
+    consumer:
+      group-id: notification-group
+      auto-offset-reset: earliest
+      enable-auto-commit: false
+
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+
+      properties:
+        spring.json.use.type.headers: false
+        spring.json.value.default.type: com.example.kafka.notification.dto.PaymentApprovedEvent
+        spring.json.trusted.packages: com.example.kafka.notification.dto
+
+    listener:
+      ack-mode: manual
+
   docker:
     compose:
       enabled: false
-  kafka:
-    bootstrap-servers: localhost:9092
+
+server:
+  port: 8083
