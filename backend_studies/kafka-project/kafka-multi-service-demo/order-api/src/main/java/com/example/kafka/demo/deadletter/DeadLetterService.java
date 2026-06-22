@@ -1,17 +1,13 @@
-package com.example.kafka.demo.service;
+package com.example.kafka.demo.deadletter;
 
 import com.example.kafka.demo.dto.CreateOrderCommand;
-import com.example.kafka.demo.entity.DeadLetterEvent;
-import com.example.kafka.demo.entity.DeadLetterStatus;
 import com.example.kafka.demo.metrics.KafkaMetricsService;
-import com.example.kafka.demo.repository.DeadLetterEventRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 @Service
 public class DeadLetterService {

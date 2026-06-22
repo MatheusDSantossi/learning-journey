@@ -1,9 +1,5 @@
-package com.example.kafka.demo.controller;
+package com.example.kafka.demo.deadletter;
 
-import com.example.kafka.demo.entity.DeadLetterEvent;
-import com.example.kafka.demo.entity.DeadLetterStatus;
-import com.example.kafka.demo.repository.DeadLetterEventRepository;
-import com.example.kafka.demo.service.DeadLetterService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;

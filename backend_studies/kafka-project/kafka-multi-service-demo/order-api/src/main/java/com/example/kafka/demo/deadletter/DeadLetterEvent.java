@@ -1,10 +1,11 @@
-package com.example.kafka.demo.entity;
+package com.example.kafka.demo.deadletter;
 
 import jakarta.persistence.*;
 import lombok.*;
-import com.example.kafka.demo.entity.DeadLetterStatus;
 
 import java.time.LocalDateTime;
+
+import com.example.kafka.demo.deadletter.DeadLetterStatus;
 
 @Entity
 @Table(name = "dead_letter_events")

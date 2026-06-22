@@ -1,7 +1,5 @@
-package com.example.kafka.demo.repository;
+package com.example.kafka.demo.deadletter;
 
-import com.example.kafka.demo.entity.DeadLetterEvent;
-import com.example.kafka.demo.entity.DeadLetterStatus;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;

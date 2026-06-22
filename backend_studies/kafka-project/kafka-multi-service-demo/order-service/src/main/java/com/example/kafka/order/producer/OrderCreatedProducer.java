@@ -9,6 +9,12 @@ public class OrderCreatedProducer {
     private final KafkaTemplate<String, OrderCreatedEvent> kafkaTemplate;
 
     public void send(OrderCreatedEvent event) {
-        
+        kafkaTemplate.send(
+                "orders.created",
+                event.getCustomerId(),
+                event
+        );
+
+        System.out.println("Sent OrderCreatedEvent: " + event);
     }
 }
