@@ -13,7 +13,7 @@ public class OrderProducer {
     public void send(CreateOrderCommand command) {
         kafkaTemplate.send(
                 // "orders",
-                "orders.created",
+                "orders.commands",
                 command.getCustomerId(), // !IMPORTANT: It's Kafka key, this means all orders from the same customer will
                                        // go to the same partition
                 command);

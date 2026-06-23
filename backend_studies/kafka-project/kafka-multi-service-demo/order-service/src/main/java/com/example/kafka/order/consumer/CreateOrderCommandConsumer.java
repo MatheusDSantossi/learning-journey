@@ -16,7 +16,7 @@ public class CreateOrderCommandConsumer {
     }
 
     @KafkaListener(topics = "orders.commands", groupId = "order-service-group")
-    public void consume(ConsumerRecord<String, CreateOrderCommand> record, Acknowledment acknowledgment) {
+    public void consume(ConsumerRecord<String, CreateOrderCommand> record, Acknowledgment acknowledgment) {
         System.out.println("Received CreateOrderCommand: " + record.value());
 
         orderService.handle(record.value());

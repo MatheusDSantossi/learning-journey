@@ -21,7 +21,7 @@ spring:
       key-serializer: org.apache.kafka.common.serialization.StringSerializer
       value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
 
-    listerner:
+    listener:
       ack-mode: manual
 
   docker:
@@ -41,3 +41,6 @@ spring:
     properties:
       hibernate:
         format_sql: true
+
+server:
+  port: 8081

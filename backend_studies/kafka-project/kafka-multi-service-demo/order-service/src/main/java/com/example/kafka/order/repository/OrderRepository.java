@@ -1,7 +1,7 @@
-import jakarta.persistence.*;
-import lombok.*;
+package com.example.kafka.order.repository;
 
-import java.time.LocalDateTime;
+import com.example.kafka.order.entity.OrderEntity;
+import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface OrderRepository extends JpaRepository<OrderEntity, Long> {
     boolean existsByOrderId(String orderId);

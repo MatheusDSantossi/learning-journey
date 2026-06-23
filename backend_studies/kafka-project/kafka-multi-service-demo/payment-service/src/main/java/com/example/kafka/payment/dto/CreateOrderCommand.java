@@ -1,15 +1,15 @@
 package com.example.kafka.payment.dto;
 
-public class OrderCreatedEvent {
+public class CreateOrderCommand {
     private String orderId;
     private String customerId;
     private double amount;
 
-    public OrderCreatedEvent() {
+    public CreateOrderCommand() {
 
     }
 
-    public OrderCreatedEvent(String orderId, String customerId, Double amount) {
+    public CreateOrderCommand(String orderId, String customerId, Double amount) {
         this.orderId = orderId;
         this.customerId = customerId;
         this.amount = amount;

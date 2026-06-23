@@ -13,7 +13,7 @@ spring:
       value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
       properties:
         spring.json.use.type.headers: false
-        spring.json.value.default.type: com.example.kafka.payment.dto.OrderCreatedEvent
+        spring.json.value.default.type: com.example.kafka.payment.dto.CreateOrderCommand
         spring.json.trusted.packages: "com.example.kafka.payment.dto"
 
     producer:

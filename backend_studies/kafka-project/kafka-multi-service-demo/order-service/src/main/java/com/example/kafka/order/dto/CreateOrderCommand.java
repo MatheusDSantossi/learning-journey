@@ -1,11 +1,12 @@
-package com.example.kafka.order.dto
+package com.example.kafka.order.dto;
 
 public class CreateOrderCommand {
     private String orderId;
     private String customerId;
     private Double amount;
 
-    public CreateOrderCommand() {}
+    public CreateOrderCommand() {
+    }
 
     public CreateOrderCommand(String orderId, String customerId, Double amount) {
         this.orderId = orderId;
@@ -13,12 +14,29 @@ public class CreateOrderCommand {
         this.amount = amount;
     }
 
-    public String getOrderId() { return orderId; }
+    public String getOrderId() {
+        return orderId;
+    }
 
-    public void setOrderId(String orderId) { this.orderId = orderId;}
+    public void setOrderId(String orderId) {
+        this.orderId = orderId;
+    }
 
-    public Double getAmount() { return amount; }
-    public void setAmount(Double amount) { this.amount = amount;}
+    public String getCustomerId() {
+        return customerId;
+    }
+
+    public void setCustomerId(String customerId) {
+        this.customerId = customerId;
+    }
+
+    public Double getAmount() {
+        return amount;
+    }
+
+    public void setAmount(Double amount) {
+        this.amount = amount;
+    }
 
     @Override
     public String toString() {

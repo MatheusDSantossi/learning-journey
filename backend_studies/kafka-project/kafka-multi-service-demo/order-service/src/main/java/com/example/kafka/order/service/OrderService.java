@@ -43,12 +43,13 @@ public class OrderService {
 
         orderRepository.save(order);
 
-        System.out.prinln("Order saved to PostgreSQL: " + command.getOrderId());
+        System.out.println("Order saved to PostgreSQL: " + command.getOrderId());
 
         OrderCreatedEvent event = new OrderCreatedEvent(
-            command.getOrderId(),
-            command.getCustomerId(),
-            command.getAmount()
-        );
+                command.getOrderId(),
+                command.getCustomerId(),
+                command.getAmount());
+
+        producer.send(event);
     }
 }
