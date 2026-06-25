@@ -1,14 +1,15 @@
 package com.example.kafka.order.service;
 
+import java.time.LocalDateTime;
+
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import com.example.kafka.order.dto.CreateOrderCommand;
 import com.example.kafka.order.dto.OrderCreatedEvent;
 import com.example.kafka.order.entity.OrderEntity;
 import com.example.kafka.order.producer.OrderCreatedProducer;
 import com.example.kafka.order.repository.OrderRepository;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
-import java.time.LocalDateTime;
 
 @Service
 public class OrderService {
@@ -35,12 +36,19 @@ public class OrderService {
             return;
         }
 
+        if ("ORD-FAIL".equals(command.getOrderId())) {
+            throw new RuntimeException("Simulated DB failure");
+            
+        }
+        
         OrderEntity order = OrderEntity.builder().orderId(command.getOrderId())
                 .customerId(command.getCustomerId())
                 .amount(command.getAmount())
                 .createdAt(LocalDateTime.now())
                 .build();
 
+        
+        
         orderRepository.save(order);
 
         System.out.println("Order saved to PostgreSQL: " + command.getOrderId());
