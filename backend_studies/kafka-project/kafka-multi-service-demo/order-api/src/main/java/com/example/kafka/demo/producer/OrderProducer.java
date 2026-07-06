@@ -8,15 +8,15 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor
 public class OrderProducer {
+    public static final String TOPIC = "orders.commands";
+    public static final String CORRELATION_ID_HEADER = "X-Correlation-Id";
+
     private final KafkaTemplate<String, CreateOrderCommand> kafkaTemplate;
 
-    public void send(CreateOrderCommand command) {
-        kafkaTemplate.send(
-                // "orders",
-                "orders.commands",
-                command.getCustomerId(), // !IMPORTANT: It's Kafka key, this means all orders from the same customer will
-                                       // go to the same partition
-                command);
+    public void send(CreateOrderCommand command, String correlationId) {
+        Message<CreateOrderCommand> message = MessageBuilder.withPayload(command).setHeader(KafkaHeaders.TOPIC, TOPIC).setHeader(CORRELATION_ID_HEADER, correlationId).build();
+
+        kafkaTemplate.send(message);
 
         System.out.println("Sent OrderCreated command: " + command);
     }

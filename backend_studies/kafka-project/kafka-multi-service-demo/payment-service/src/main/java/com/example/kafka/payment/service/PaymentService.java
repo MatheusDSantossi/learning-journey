@@ -16,7 +16,7 @@ public class PaymentService {
         this.paymentApprovedProducer = paymentApprovedProducer;
     }
 
-    public void process(CreateOrderCommand event) {
+    public void process(CreateOrderCommand event, String correlationId) {
         System.out.println("Processing payment for order: " + event.getOrderId());
 
         PaymentApprovedEvent approvedEvent = new PaymentApprovedEvent(
@@ -24,7 +24,7 @@ public class PaymentService {
                 UUID.randomUUID().toString(),
                 LocalDateTime.now().toString());
 
-        paymentApprovedProducer.send(approvedEvent);
+        paymentApprovedProducer.send(approvedEvent, correlationId);
 
     }
 }

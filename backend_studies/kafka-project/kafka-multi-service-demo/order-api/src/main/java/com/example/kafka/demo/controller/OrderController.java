@@ -9,13 +9,17 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/orders")
 @RequiredArgsConstructor
 public class OrderController {
-    private final OrderProducer producer;
+    private final OrderProducer orderProducer;
 
     @PostMapping
     public String createOrder(
-            @RequestBody CreateOrderCommand command) {
-        producer.send(command);
+            @RequestBody CreateOrderCommand command,
+            @RequestHeader(value = "X-Correlation-Id", required = false) String correlationId
+        ) {
+            String finalCorrelationId = (correlationId == null || correlationId.isBlank()) ? UUID.randomUUID().toString() : correlationId;
 
-        return "Order command published";
+        orderProducer.send(command, finalCorrelationId);
+
+        return ResponseEntity.accepeted().build();
     }
 }

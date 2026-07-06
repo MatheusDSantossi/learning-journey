@@ -22,7 +22,7 @@ public class OrderService {
     }
 
     @Transactional
-    public void handle(CreateOrderCommand command) {
+    public void handle(CreateOrderCommand command, String correlationId) {
         if (command == null) {
             throw new IllegalArgumentException("Order command cannot be null");
         }
@@ -58,6 +58,6 @@ public class OrderService {
                 command.getCustomerId(),
                 command.getAmount());
 
-        producer.send(event);
+        producer.send(event, correlationId);
     }
 }
