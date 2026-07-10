@@ -1,6 +1,8 @@
 package com.example.kafka.order.config;
 
 import com.example.kafka.order.dto.CreateOrderCommand;
+import com.example.kafka.order.dto.OrderCreatedEvent;
+
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.common.TopicPartition;
 import org.springframework.context.annotation.Bean;

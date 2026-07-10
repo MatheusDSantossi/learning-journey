@@ -1,8 +1,13 @@
 package com.example.kafka.order.producer;
 
 import com.example.kafka.order.dto.OrderCreatedEvent;
+
 import lombok.RequiredArgsConstructor;
+
 import org.springframework.kafka.core.KafkaTemplate;
+import org.springframework.kafka.support.KafkaHeaders;
+import org.springframework.messaging.Message;
+import org.springframework.messaging.support.MessageBuilder;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -15,7 +20,8 @@ public class OrderCreatedProducer {
     private final KafkaTemplate<String, Object> kafkaTemplate;
 
     public void send(OrderCreatedEvent event, String correlationId) {
-        Message<OrderCreatedEvent> message = MessageBuilder.withPayload(event).setHeader(KafkaHeaders.TOPIC, topic).setHeader(CORRELATION_ID_HEADER, correlationId).build();
+        Message<OrderCreatedEvent> message = MessageBuilder.withPayload(event).setHeader(KafkaHeaders.TOPIC, TOPIC)
+                .setHeader(CORRELATION_ID_HEADER, correlationId).build();
 
         kafkaTemplate.send(message);
 

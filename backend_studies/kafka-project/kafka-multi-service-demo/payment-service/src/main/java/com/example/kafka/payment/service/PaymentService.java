@@ -1,5 +1,7 @@
 package com.example.kafka.payment.service;
 
+import java.util.UUID;
+
 import com.example.kafka.payment.dto.CreateOrderCommand;
 import com.example.kafka.payment.dto.PaymentApprovedEvent;
 import com.example.kafka.payment.producer.PaymentApprovedProducer;
@@ -24,7 +26,10 @@ public class PaymentService {
                 UUID.randomUUID().toString(),
                 LocalDateTime.now().toString());
 
-        paymentApprovedProducer.send(approvedEvent, correlationId);
+        String finalCorrelationId = (correlationId == null || correlationId.isBlank()) ? UUID.randomUUID().toString()
+                : correlationId;
+
+        paymentApprovedProducer.send(approvedEvent, finalCorrelationId);
 
     }
 }
