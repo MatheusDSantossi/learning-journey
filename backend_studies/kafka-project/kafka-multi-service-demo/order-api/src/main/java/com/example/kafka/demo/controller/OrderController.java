@@ -9,7 +9,9 @@ import lombok.RequiredArgsConstructor;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @RestController
 @RequestMapping("/orders")
 @RequiredArgsConstructor
@@ -22,6 +24,8 @@ public class OrderController {
             @RequestHeader(value = "X-Correlation-Id", required = false) String correlationId) {
         String finalCorrelationId = (correlationId == null || correlationId.isBlank()) ? UUID.randomUUID().toString()
                 : correlationId;
+
+        log.info("Publishing CreaterOrderCommand with correlationId={}", finalCorrelationId);
 
         orderProducer.send(command, finalCorrelationId);
 

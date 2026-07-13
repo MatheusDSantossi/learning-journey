@@ -30,6 +30,7 @@ public class CreateOrderCommandConsumer {
         String finalCorrelationId = (correlationId == null || correlationId.isBlank()) ? UUID.randomUUID().toString()
                 : correlationId;
 
+        log.info("order-service received correlationId={}", finalCorrelationId);
         MDC.put("correlationId", finalCorrelationId);
 
         try {

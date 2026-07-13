@@ -28,6 +28,8 @@ public class NotificationConsumer {
         String finalCorrelationId = (correlationId == null || correlationId.isBlank()) ? UUID.randomUUID().toString()
                 : correlationId;
 
+        log.info("notification-service received correlationId={}", finalCorrelationId);
+
         MDC.put("correlationId", finalCorrelationId);
         try {
             log.info("Recevied PaymentApprovedEvent");

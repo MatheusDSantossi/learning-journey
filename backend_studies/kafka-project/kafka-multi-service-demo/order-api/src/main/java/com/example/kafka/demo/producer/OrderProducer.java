@@ -17,6 +17,8 @@ public class OrderProducer {
 
     private final KafkaTemplate<String, CreateOrderCommand> kafkaTemplate;
 
+    
+
     public void send(CreateOrderCommand command, String correlationId) {
         Message<CreateOrderCommand> message = MessageBuilder.withPayload(command).setHeader(KafkaHeaders.TOPIC, TOPIC).setHeader(CORRELATION_ID_HEADER, correlationId).build();
 

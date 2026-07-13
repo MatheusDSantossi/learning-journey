@@ -8,8 +8,9 @@ import com.example.kafka.payment.producer.PaymentApprovedProducer;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.UUID;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @Service
 public class PaymentService {
     private final PaymentApprovedProducer paymentApprovedProducer;
@@ -28,6 +29,8 @@ public class PaymentService {
 
         String finalCorrelationId = (correlationId == null || correlationId.isBlank()) ? UUID.randomUUID().toString()
                 : correlationId;
+
+        log.info("payment-service received correlationId={}", finalCorrelationId);
 
         paymentApprovedProducer.send(approvedEvent, finalCorrelationId);
 

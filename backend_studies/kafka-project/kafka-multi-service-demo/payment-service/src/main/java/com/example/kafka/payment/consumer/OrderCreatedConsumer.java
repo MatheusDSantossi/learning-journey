@@ -27,6 +27,8 @@ public class OrderCreatedConsumer {
         String finalCorrelationId = (correlationId == null || correlationId.isBlank()) ? UUID.randomUUID().toString()
                 : correlationId;
 
+        log.info("payment-service consumer received correlationId={}", finalCorrelationId);
+
         MDC.put("correlationId", finalCorrelationId);
 
         try {

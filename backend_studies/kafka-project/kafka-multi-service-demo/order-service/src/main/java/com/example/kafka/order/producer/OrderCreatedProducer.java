@@ -9,7 +9,9 @@ import org.springframework.kafka.support.KafkaHeaders;
 import org.springframework.messaging.Message;
 import org.springframework.messaging.support.MessageBuilder;
 import org.springframework.stereotype.Service;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class OrderCreatedProducer {
@@ -22,6 +24,8 @@ public class OrderCreatedProducer {
     public void send(OrderCreatedEvent event, String correlationId) {
         Message<OrderCreatedEvent> message = MessageBuilder.withPayload(event).setHeader(KafkaHeaders.TOPIC, TOPIC)
                 .setHeader(CORRELATION_ID_HEADER, correlationId).build();
+
+        log.info("order-service publishing OrderCreatedEvent with correlationId={}", correlationId);
 
         kafkaTemplate.send(message);
 
