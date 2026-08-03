@@ -1,4 +1,4 @@
-package com.example.kafka.demo.metrics;
+package com.example.kafka.order.metrics;
 
 import io.micrometer.core.instrument.Counter;
 import io.micrometer.core.instrument.MeterRegistry;

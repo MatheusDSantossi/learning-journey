@@ -1,4 +1,4 @@
-package com.example.kafka.demo.deadletter;
+package com.example.kafka.order.deadletter;
 
 public enum DeadLetterStatus {
     PENDING,

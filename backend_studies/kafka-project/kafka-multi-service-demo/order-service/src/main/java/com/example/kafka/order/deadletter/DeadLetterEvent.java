@@ -1,11 +1,11 @@
-package com.example.kafka.demo.deadletter;
+package com.example.kafka.order.deadletter;
 
 import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDateTime;
 
-import com.example.kafka.demo.deadletter.DeadLetterStatus;
+import com.example.kafka.order.deadletter.DeadLetterStatus;
 
 @Entity
 @Table(name = "dead_letter_events")
@@ -44,4 +44,6 @@ public class DeadLetterEvent {
     private String replayError;
 
     private Integer replayAttempts;
+
+    private String correlationId;
 }

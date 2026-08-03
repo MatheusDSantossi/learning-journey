@@ -1,4 +1,4 @@
-package com.example.kafka.demo.deadletter;
+package com.example.kafka.order.deadletter;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 

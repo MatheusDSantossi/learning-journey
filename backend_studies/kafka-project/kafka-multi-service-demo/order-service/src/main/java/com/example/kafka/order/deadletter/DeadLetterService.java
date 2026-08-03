@@ -1,24 +1,28 @@
-package com.example.kafka.demo.deadletter;
+package com.example.kafka.order.deadletter;
 
-import com.example.kafka.demo.dto.CreateOrderCommand;
-import com.example.kafka.demo.metrics.KafkaMetricsService;
+import com.example.kafka.order.dto.CreateOrderCommand;
+import com.example.kafka.order.metrics.KafkaMetricsService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.kafka.support.KafkaHeaders;
+
+import org.springframework.messaging.Message;
+import org.springframework.messaging.support.MessageBuilder;
 
 import java.time.LocalDateTime;
 
 @Service
 public class DeadLetterService {
     private final DeadLetterEventRepository repository;
-    private final KafkaTemplate<String, CreateOrderCommand> kafkaTemplate;
+    private final KafkaTemplate<String, Object> kafkaTemplate;
     private final ObjectMapper objectMapper;
     private final KafkaMetricsService kafkaMetricsService;
 
     public DeadLetterService(
             DeadLetterEventRepository repository,
-            KafkaTemplate<String, CreateOrderCommand> kafkaTemplate,
+            KafkaTemplate<String, Object> kafkaTemplate,
             ObjectMapper objectMapper,
             KafkaMetricsService kafkaMetricsService) {
         this.repository = repository;
@@ -34,6 +38,7 @@ public class DeadLetterService {
             Long originalOffset,
             String messageKey,
             CreateOrderCommand payload,
+            String correlationId,
             String exceptionMessage) {
         try {
             DeadLetterEvent dlt = DeadLetterEvent.builder()
@@ -41,6 +46,7 @@ public class DeadLetterService {
                     .originalPartition(originalPartition)
                     .originalOffset(originalOffset)
                     .messageKey(messageKey)
+                    .correlationId(correlationId)
                     .payloadJson(objectMapper.writeValueAsString(payload))
                     .exceptionMessage(exceptionMessage)
                     .failedAt(LocalDateTime.now()).status(DeadLetterStatus.PENDING)
@@ -84,10 +90,16 @@ public class DeadLetterService {
                     dlt.getPayloadJson(),
                     CreateOrderCommand.class);
 
-            kafkaTemplate.send(
-                    dlt.getOriginalTopic(),
-                    dlt.getMessageKey(),
-                    event);
+            Message<CreateOrderCommand> message = MessageBuilder.withPayload(event)
+                    .setHeader(KafkaHeaders.TOPIC, dlt.getOriginalTopic())
+                    .setHeader(KafkaHeaders.KEY, dlt.getMessageKey())
+                    .setHeader("X-Correlation-Id", dlt.getCorrelationId()).build();
+
+            kafkaTemplate.send(message);
+            // kafkaTemplate.send(
+            // dlt.getOriginalTopic(),
+            // dlt.getMessageKey(),
+            // event);
 
             dlt.setStatus(DeadLetterStatus.REPLAYED);
             dlt.setReplayedAt(LocalDateTime.now());

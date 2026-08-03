@@ -1,4 +1,4 @@
-package com.example.kafka.demo.deadletter;
+package com.example.kafka.order.deadletter;
 
 import org.springframework.web.bind.annotation.*;
 
@@ -41,13 +41,11 @@ public class DeadLetterAdminController {
     @GetMapping
     public Map<String, Object> info() {
         return Map.of("availableEndpoints",
-            List.of(
-                "GET /admin/dlt",
-                   "GET /admin/dlt/all",
-                    "GET /admin/dlt/pending",
-                    "POST /admin/dlt/{id}/replay",
-                    "POST /admin/dlt/replay-pending"
-            )
-        );
+                List.of(
+                        "GET /admin/dlt",
+                        "GET /admin/dlt/all",
+                        "GET /admin/dlt/pending",
+                        "POST /admin/dlt/{id}/replay",
+                        "POST /admin/dlt/replay-pending"));
     }
 }
