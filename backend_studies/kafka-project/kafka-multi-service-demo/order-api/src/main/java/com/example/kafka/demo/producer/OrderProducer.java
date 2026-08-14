@@ -1,6 +1,6 @@
 package com.example.kafka.demo.producer;
 
-import com.example.kafka.order.dto.CreateOrderCommand;
+import com.example.kafka.demo.dto.CreateOrderCommand;
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.kafka.core.KafkaTemplate;

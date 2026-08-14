@@ -2,7 +2,7 @@ package com.example.kafka.demo.controller;
 
 import java.util.UUID;
 
-import com.example.kafka.order.dto.CreateOrderCommand;
+import com.example.kafka.demo.dto.CreateOrderCommand;
 import com.example.kafka.demo.producer.OrderProducer;
 
 import lombok.RequiredArgsConstructor;

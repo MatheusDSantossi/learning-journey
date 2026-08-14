@@ -7,7 +7,7 @@ public class CreateOrderCommand {
 
     public CreateOrderCommand() {}
 
-    public CreateOrderCommand(String orderId, String customerId, Double amout) {
+    public CreateOrderCommand(String orderId, String customerId, Double amount) {
         this.orderId = orderId;
         this.customerId = customerId;
         this.amount = amount;

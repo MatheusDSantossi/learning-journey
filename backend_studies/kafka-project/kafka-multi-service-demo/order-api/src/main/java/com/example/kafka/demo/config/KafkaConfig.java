@@ -1,6 +1,6 @@
 package com.example.kafka.demo.config;
 
-import com.example.kafka.order.dto.CreateOrderCommand;
+import com.example.kafka.demo.dto.CreateOrderCommand;
 import org.springframework.kafka.listener.ContainerProperties;
 import org.apache.kafka.common.TopicPartition;
 import org.springframework.context.annotation.Bean;
